@@ -1,0 +1,50 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.0'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'testtool'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// jdbi
+	// https://mvnrepository.com/artifact/org.jdbi/jdbi3-core
+//	implementation 'org.jdbi:jdbi:2.78'
+	implementation group: 'org.jdbi', name: 'jdbi3-core', version: '3.29.0'
+	implementation 'org.jdbi:jdbi3-bom:3.29.0'
+	implementation 'org.jdbi:jdbi3-sqlobject:3.29.0'
+
+	//
+	implementation 'com.google.inject:guice:5.1.0'
+	// https://mvnrepository.com/artifact/com.zaxxer/HikariCP
+	implementation group: 'com.zaxxer', name: 'HikariCP', version: '5.0.1'
+
+
+	// swagger
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
