@@ -2,6 +2,7 @@ package com.hanq.easytpms.service;
 
 import com.hanq.easytpms.repository.TestExecutionRepository;
 import com.hanq.easytpms.vo.TestExecutionVO;
+import org.jdbi.v3.sqlobject.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ public class TestExecutionService {
 
     @Autowired
     TestExecutionRepository testExecutionRepository;
+
 
     public TestExecutionVO insertTestExecution(TestExecutionVO testExecutionVO){
         return testExecutionRepository.insertTestExecution(testExecutionVO);

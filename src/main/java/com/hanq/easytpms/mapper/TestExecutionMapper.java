@@ -9,6 +9,7 @@ import com.hanq.easytpms.vo.TestExecutionVO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 public class TestExecutionMapper implements RowMapper<TestExecutionVO> {
 
     // 각 행에 대해 한 번씩 호출

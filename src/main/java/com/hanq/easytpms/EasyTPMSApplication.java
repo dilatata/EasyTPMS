@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EasyTPMSApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EasyTmpsApplication.class, args);
+		SpringApplication.run(EasyTPMSApplication.class, args);
 	}
 
 	// db table 생성
