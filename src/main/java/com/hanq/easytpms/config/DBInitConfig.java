@@ -3,13 +3,16 @@ package com.hanq.easytpms.config;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.h2.H2DatabasePlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-//@AutoConfigureBefore
+@AutoConfigureBefore
 @Configuration
+@ComponentScan
 public class DBInitConfig {
     // 서비스에 자동 연결될 수 있는 빈 생성성
    @Bean
@@ -19,11 +22,10 @@ public class DBInitConfig {
                 .installPlugin(new H2DatabasePlugin());
     }
 
-
     private Jdbi jdbi;
 
     @Bean
-    public void TestExecutionTable(Jdbi jdbi) {
+    private void createTestExecutionTable(Jdbi jdbi) {
         this.jdbi = jdbi;
         jdbi.useHandle(dao -> {
             dao.execute("CREATE TABLE IF NOT EXISTS execution(" +

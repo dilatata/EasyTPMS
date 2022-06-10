@@ -1,4 +1,4 @@
-package testtool.demo;
+package com.hanq.easytpms;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

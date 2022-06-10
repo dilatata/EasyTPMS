@@ -1,71 +1,66 @@
 package com.hanq.easytpms.controller;
 
+import com.hanq.easytpms.repository.TestExecutionRepository;
 import com.hanq.easytpms.service.TestExecutionService;
 import lombok.extern.slf4j.Slf4j;
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.hanq.easytpms.vo.TestExecutionVO;
 
+import java.math.BigInteger;
 import java.util.List;
 
 
 @RestController
 @EnableWebMvc
 @Slf4j
-// controller에서 db 바로 연결할 수 없어야 함 - service - repository 생성하기
 public class TestExecutionController {
-
-    @Autowired
-    private Jdbi jdbi;
 
     @Autowired
     TestExecutionService testExecutionService;
 
 
-//     시나리오 개별 생성
+
+    // execution 단독 생성
     @PostMapping("/execution/create")
     public TestExecutionVO insertTestExecution(@RequestBody TestExecutionVO testExecutionVO){
         return testExecutionService.insertTestExecution(testExecutionVO);
     }
 
 
-//     프로젝트 전체 조회 , 조건조회 추가하기
+    // 프로젝트 전체 조회 , 조건조회 추가하기
     @GetMapping("/execution/list/{projectName}")
     public List<TestExecutionVO> getTestExecutionList(@PathVariable("projectName") String projectName){
         return testExecutionService.getTestExecutionList(projectName);
     }
 
 
-//     execution 단독 조회
+    // execution 상세 조회
     @GetMapping("/execution/list/{executionId}")
-    public TestExecutionVO getExecution(@PathVariable("executionId") Long executionId){
-        return testExecutionService.getTestExecutionInfo(executionId);
+    public TestExecutionVO getTestExecution(@PathVariable("executionId") Long executionId){
+        return testExecutionService.getTestExecutionInfo(BigInteger.valueOf(executionId));
     }
 
-    // 시나리오 개별 수정
+    // execution 단독 수정 -> 결과 입력X
+    @PostMapping("/execution/update/{executionId}")
+    public void editTestExecution(@RequestBody TestExecutionVO request, BigInteger executionId) {
+        testExecutionService.editTestExecution(request, executionId);
+    }
 
-    // 시나리오 개별 삭제
+    // execution 단독 삭제
+    @DeleteMapping("/execution/delete/{executionId}")
+    public void deleteTestExecution(@PathVariable("executionId") BigInteger executionId) {
+        testExecutionService.deleteTestExecution(executionId);
+    }
 
-    // 시나리오 결과 입력
-
-    // 시나리오 결함 생성
-
-    // 연관 결함 리스트 조회
-
-    // 결함 리스트 조회
-
-    // 결함 세부조건 작성 (수정)
-
-    // 조치 결과 작성
-
-    // 조치 확인 작성성
-
-
-
-
-
+    // execution 결과입력
+    @PostMapping("/execution/result/{executionId}")
+    public void updateTestExecution(@RequestBody TestExecutionVO exec_result) {
+        testExecutionService.updateTestExecution(exec_result);
+    }
 
 
 }
