@@ -39,10 +39,10 @@ public class TestDefectController {
     @GetMapping("/defect/list/{projectName}")
     public Object findAllDefectList(@PathVariable("projectName") String projectName) {
         return testDefectService.findDefectListByProjectName(projectName);
-    };
+    }
 
     // 결함 세부조건 작성(수정) -> history 생성
-    @PostMapping("/defect/result/{executionId}")
+    @PostMapping("/defect/edit/detail/{defectId}")
     public void editTestDefect(@RequestBody TestDefectVO request) {
 
         testDefectService.editTestDefect(request);
@@ -50,13 +50,13 @@ public class TestDefectController {
     }
 
     // 결함조치 결과 작성 -> history 생성
-    @PostMapping
+    @PostMapping("/defect/update/result/{defectId}")
     public void updateTestDefect(@RequestBody TestDefectVO request) {
         testDefectService.updateTestDefect(request);
     }
 
     // 결함조치 확인 작성
-    @PostMapping
+    @PostMapping("/defect/check/{defectId}")
     public void updateTestDefectCheck(@RequestBody TestDefectVO request) {
         testDefectService.updateTestDefectCheck(request);}
 
