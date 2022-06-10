@@ -9,10 +9,6 @@ import java.util.List;
 public class TestExecutionRepositoryImpl implements TestExecutionRepository{
 
     @Override
-    public void createTestExecutionTable() {
-    }
-
-    @Override
     public TestExecutionVO insertTestExecution(TestExecutionVO testExecutionVO) {
         return null;
     }

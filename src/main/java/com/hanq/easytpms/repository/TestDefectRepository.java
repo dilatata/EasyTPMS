@@ -46,11 +46,22 @@ public interface TestDefectRepository {
     TestDefectVO editTestDefect(@BindBean TestDefectVO request);
 
     // 결함조치 결과 작성
-    // @Bind("defect_status") String defectStatus, 조치완료료    @Transaction
+    @Transaction
     @SqlUpdate("UPDATE defect SET defect_status = :defectStatus ,defect_date = :defectDate, defect_action_yn = :defectActionYn, defect_action_contents = :defectActionContents WHERE defect_id = :id")
-    void updateTestDefect(@Bind("defect_id") BigInteger id, @Bind("defect_date") Date defectDate, @Bind("defect_action_yn") String defectActionYn, @Bind("defect_action_contents") String defectActionContents);
+    void updateTestDefect(@Bind("defect_id") BigInteger id, @Bind("defect_status") String defectStatus, @Bind("defect_date") Date defectDate, @Bind("defect_action_yn") String defectActionYn, @Bind("defect_action_contents") String defectActionContents);
 
     // 결함조치 확인 작성
+    @Transaction
+    @SqlUpdate("UPDATE defect SET defect_status = :defectStatus , defect_check = :defectCheck, defect_check_date = :defectCheckDate WHERE defect_id = :id")
+    void updateTestDefectCheckY(@Bind("defect_id") BigInteger id,
+                                @Bind("defect_status") String defectStatus,
+                                @Bind("defect_check") String defectCheck,
+                                @Bind("defect_check_date") Date defectCheckDate);
+
+    @Transaction
+    @SqlUpdate("UPDATE defect SET defect_status = '재결함', defect_date = NULL WHERE defect_id = :id")
+    void updateTestDefectCheckN(@Bind("defect_id") BigInteger id);
+
 
     // 결함 첨부파일 생성
 

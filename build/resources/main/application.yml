@@ -8,6 +8,8 @@ server:
 
 # H2 setting
 spring:
+  main:
+    allow-circular-references: true
   h2:
     console:
       enabled: true

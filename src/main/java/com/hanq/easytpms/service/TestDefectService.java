@@ -54,21 +54,42 @@ public class TestDefectService {
     }
 
     // 결함조치 결과 작성 -> defectId defect_status defect_date, defect_action_yn, defect_action_contents
+    // defect_action_yn - y (defect status 조치완료) / n (변경필요 없음)
     public void updateTestDefect(TestDefectVO request) {
         BigInteger defectId = BigInteger.valueOf(request.getDefectId());
-        String defectStatus = request.getDefectStatus(); //-> 조치 여부 y 이면 조치 완료
-        Date defectDate = request.getDefectDate();
+        String defectStatus = request.getDefectStatus(); // 조건문 필요
+        Date defectDate = request.getDefectDate(); // 조치확인 y로 변한 날 변경해
         String defectActionYn = request.getDefectActionYn();
         String defectActionContents = request.getDefectActionContents();
-        testDefectRepository.updateTestDefect(defectId, defectDate, defectActionYn, defectActionContents);
-
         BigInteger executionId = BigInteger.valueOf(request.getExecutionId());
         String defectTeam = request.getDefectTeam();;
         String defectCharge = request.getDefectCharge();
+
+        testDefectRepository.updateTestDefect(defectId, defectStatus, defectDate, defectActionYn, defectActionContents);
         testDefectHistoryRepository.insertTestDefectHistory(defectId, executionId, defectStatus, defectTeam, defectCharge, defectActionContents);
     }
 
     // 결함조치 확인 작성 -> 조치 결과 defect_check = y 면 defect_check_date, defect_status 변경, / no -> 결함최종상태 재결함으로 만들기
+    public void updateTestDefectCheck(TestDefectVO request){
+        BigInteger defectId = BigInteger.valueOf(request.getDefectId());
+        String defectStatus = request.getDefectStatus(); //-> 조치 여부 y 이면 조치 완료
+        Date defectDate = request.getDefectDate(); // 조치 확인 n인 경우 비우나?
+        String defectActionYn = request.getDefectActionYn();
+        String defectActionContents = request.getDefectActionContents();
+        BigInteger executionId = BigInteger.valueOf(request.getExecutionId());
+        String defectTeam = request.getDefectTeam();;
+        String defectCharge = request.getDefectCharge();
+
+        // 조치 확인
+        String defectCheck = request.getDefectCheck();
+        Date defectCheckDate = request.getDefectCheckDate(); // request.getDefectCheck y인 경우만 생성 n -> status"재결함", defectdate null값으로
+        if(defectCheck == "y") {
+            testDefectRepository.updateTestDefectCheckY(defectId,defectStatus, defectCheck, defectCheckDate); // check 결과 따라서 조건문으로 만들기
+        }else{
+            testDefectRepository.updateTestDefectCheckN(defectId);
+        }
+        testDefectHistoryRepository.insertTestDefectHistory(defectId, executionId, defectStatus, defectTeam, defectCharge, defectActionContents);
+    }
 
     // 결함 첨부파일 생성
 

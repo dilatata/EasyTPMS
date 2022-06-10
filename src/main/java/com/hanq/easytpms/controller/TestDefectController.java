@@ -56,8 +56,9 @@ public class TestDefectController {
     }
 
     // 결함조치 확인 작성
-//    @PostMapping
-//    public void
+    @PostMapping
+    public void updateTestDefectCheck(@RequestBody TestDefectVO request) {
+        testDefectService.updateTestDefectCheck(request);}
 
     // 결함 첨부파일 생성
 
