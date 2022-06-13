@@ -15,16 +15,8 @@ import java.util.List;
 @Service
 public class TestExecutionService {
 
-//    TestExecutionRepository testExecutionRepository;
-//    private final TestExecutionRepository testExecutionRepository = new TestExecutionRepositoryImpl();
-
-//    @Autowired
-//    public TestExecutionService(TestExecutionRepository testExecutionRepository){
-//        this.testExecutionRepository = testExecutionRepository;
-//    }
 
     private final TestExecutionRepository testExecutionRepository;
-//    private TestExecutionRowMapper testExecutionRowMapper;
     private TestExecutionVO testExecutionVO;
 
     @Autowired
@@ -35,7 +27,6 @@ public class TestExecutionService {
 
     // 단일 execution 생성
     public void insertTestExecution(TestExecutionVO request){
-        System.out.println("TestExecutionService : "+request);
         testExecutionRepository.insertTestExecution(request);
     }
 

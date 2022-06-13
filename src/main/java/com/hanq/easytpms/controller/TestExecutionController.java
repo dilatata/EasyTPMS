@@ -19,13 +19,7 @@ import java.util.List;
 @Slf4j
 public class TestExecutionController {
 
-//    TestExecutionService testExecutionService;
     private final TestExecutionService testExecutionService;
-
-//    @Autowired
-//    public TestExecutionController(TestExecutionService testExecutionService){
-//        this.testExecutionService = testExecutionService;
-//    }
 
 
     private Jdbi jdbi;
