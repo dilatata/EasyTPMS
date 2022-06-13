@@ -13,7 +13,7 @@ import java.sql.SQLException;
 @Component
 public class TestExecutionRowMapper implements RowMapper<TestExecutionVO> {
 
-    // 각 행에 대해 한 번씩 호출 List<TestExecutionVO> vo = handle.createQuery("").map(new TestExecutionRowMapper()).list();
+    // 각 행에 대해 한 번씩 호출 List<TestExecutionVO> vo = handle.createQuery("").map(new TestExecutionRowMapper()).list(); -> list 생성
     // 매핑 유형 지정하지 않고 등록도 가능, 메핑된 유형 자동 검색  handle.registerRowMapper(new UserMapper());
     @Override
     public TestExecutionVO map(ResultSet rs, StatementContext ctx) throws SQLException {

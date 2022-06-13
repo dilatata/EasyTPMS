@@ -2,6 +2,7 @@ package com.hanq.easytpms.vo;
 
 import lombok.*;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
+import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 
@@ -9,6 +10,7 @@ import java.sql.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@Component
 public class TestExecutionVO {
     private Long executionId;
     private String projectName;

@@ -1,8 +1,11 @@
 package com.hanq.easytpms.service;
 
+import com.hanq.easytpms.mapper.TestExecutionRowMapper;
 import com.hanq.easytpms.repository.TestExecutionRepository;
+import com.hanq.easytpms.repository.TestExecutionRepositoryImpl;
 import com.hanq.easytpms.vo.TestExecutionVO;
 import org.jdbi.v3.core.Jdbi;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -12,12 +15,28 @@ import java.util.List;
 @Service
 public class TestExecutionService {
 
-    TestExecutionRepository testExecutionRepository;
+//    TestExecutionRepository testExecutionRepository;
+//    private final TestExecutionRepository testExecutionRepository = new TestExecutionRepositoryImpl();
+
+//    @Autowired
+//    public TestExecutionService(TestExecutionRepository testExecutionRepository){
+//        this.testExecutionRepository = testExecutionRepository;
+//    }
+
+    private final TestExecutionRepository testExecutionRepository;
+//    private TestExecutionRowMapper testExecutionRowMapper;
+    private TestExecutionVO testExecutionVO;
+
+    @Autowired
+    public TestExecutionService(TestExecutionRepository testExecutionRepository) {
+        this.testExecutionRepository = testExecutionRepository;
+    }
 
 
     // 단일 execution 생성
-    public TestExecutionVO insertTestExecution(TestExecutionVO testExecutionVO){
-        return testExecutionRepository.insertTestExecution(testExecutionVO);
+    public void insertTestExecution(TestExecutionVO request){
+        System.out.println("TestExecutionService : "+request);
+        testExecutionRepository.insertTestExecution(request);
     }
 
     // 프로젝트 전체 조회 , 조건조회 추가하기

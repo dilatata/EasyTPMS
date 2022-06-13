@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 @AutoConfigureBefore
 @Configuration
-@ComponentScan
+//@ComponentScan
 public class DBInitConfig {
     // 서비스에 자동 연결될 수 있는 빈 생성성
    @Bean

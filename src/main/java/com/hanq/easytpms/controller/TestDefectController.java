@@ -4,6 +4,7 @@ import com.hanq.easytpms.service.TestDefectService;
 import com.hanq.easytpms.service.TestExecutionService;
 import com.hanq.easytpms.vo.TestDefectVO;
 import lombok.extern.slf4j.Slf4j;
+import org.jdbi.v3.core.Jdbi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -15,12 +16,48 @@ import java.math.BigInteger;
 @Slf4j
 public class TestDefectController {
 
-    TestDefectService testDefectService;
+     private final TestDefectService testDefectService;
+//    private final TestDefectService testDefectService;
+
+//    @Autowired
+//    public TestDefectController(TestDefectService testDefectService){
+//        this.testDefectService = testDefectService;
+//    }
+
+//    private Jdbi jdbi;
+//
+    @Autowired
+    public TestDefectController(TestDefectService testDefectService, Jdbi jdbi) {
+        this.testDefectService = testDefectService;
+//        this.jdbi = jdbi;
+//        jdbi.useHandle(dao -> {
+//            dao.execute("CREATE TABLE IF NOT EXISTS defect(" +
+//                    "defect_id BIGINT NOT NULL AUTO_INCREMENT, " +
+//                    "execution_id BIGINT NOT NULL, " +
+//                    " defect_category VARCHAR(100) NULL," +
+//                    " defect_contents VARCHAR(2000) NOT NULL," +
+//                    " defect_status VARCHAR(100) NULL," +
+//                    " created_by VARCHAR(100) NULL," +
+//                    " create_at DATE NULL," +
+//                    " defect_team VARCHAR(100) NOT NULL," +
+//                    " defect_charger VARCHAR(100) NOT NULL," +
+//                    " defect_start_due_date DATE NOT NULL," +
+//                    " defect_end_due_date DATE NOT NULL," +
+//                    " defect_date DATE NOT NULL," +
+//                    " defect_action_yn VARCHAR(5) NOT NULL," +
+//                    " defect_action_contents VARCHAR(2000) NOT NULL," +
+//                    " defect_check VARCHAR(5) NOT NULL," +
+//                    " defect_check_date DATE NOT NULL," +
+//                    "PRIMARY KEY ('defect_id')");
+//        });
+    }
+
+
 
     // 시나리오 결함 생성 -> defect history 생성 시작점?
     @PostMapping(value = "/defect/create/{executionId}")
-    public void insertTestDefect(@PathVariable("executionId") BigInteger executionId, @RequestBody TestDefectVO request) {
-        testDefectService.insertTestDefect(request, executionId);
+    public void insertTestDefect(@RequestBody TestDefectVO request) {
+        testDefectService.insertTestDefect(request);
     }
 
     // 시나리오 결함 개별 삭제

@@ -19,10 +19,10 @@ public interface TestExecutionRepository {
 
     // 단일 execution 생성
     @Transaction
-    @SqlUpdate("INSERT INTO execution(execution_id,project_name,test_type,scenario_type, biz_category, biz_detail, version, team_name, scenario_category, test_scenario_id, test_scenario_name, screen_id, screen_name, test_case_id, test_case_name, exec_due_date, tester, test_target_type, test_target_name, confirm_contents, test_data, build_name, build_version, note, execution_date, exec_status, exec_result) " +
-            "VALUES(:execution_id, :project_name,:test_type,:scenario_type, :biz_category, :biz_detail, :version, :team_name, :scenario_category, :test_scenario_id, :test_scenario_name, :screen_id, :screen_name, :test_case_id, :test_case_name, :exec_due_date, :tester, test_target_type, :test_target_name, :confirm_contents, :test_data, :build_name, :build_version, :note, :execution_date, :exec_status, :exec_result) ")
+    @SqlUpdate("INSERT INTO execution(project_name,test_type,scenario_type, biz_category, biz_detail, version, team_name, scenario_category, test_scenario_id, test_scenario_name, screen_id, screen_name, test_case_id, test_case_name, exec_due_date, tester, test_target_type, test_target_name, confirm_contents, test_data, build_name, build_version, note, execution_date, exec_status, exec_result) " +
+            "VALUES( :projectName,:testType,:scenarioType, :bizCategory, :bizDetail, :version, :teamName, :scenarioCategory, :testScenarioId, :testScenarioName, :screenId, :screenName, :testCaseId, :testCaseName, :execDueDate, :tester, :testTargetType, :testTargetName, :confirmContents, :testData, :buildName, :buildVersion, :note, :executionDate, :execStatus, :execResult) ")
     @GetGeneratedKeys
-    TestExecutionVO insertTestExecution(@BindBean TestExecutionVO testExecutionVO);
+    void insertTestExecution(@BindBean TestExecutionVO testExecutionVO);
 
     // 전체(projectName 선택) 조회
     @SqlQuery("SELECT * FROM execution WHERE project_name = :p_name")

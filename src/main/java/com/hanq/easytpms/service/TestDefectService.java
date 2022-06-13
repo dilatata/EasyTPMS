@@ -2,13 +2,11 @@ package com.hanq.easytpms.service;
 
 import com.hanq.easytpms.repository.TestDefectHistoryRepository;
 import com.hanq.easytpms.repository.TestDefectRepository;
+import com.hanq.easytpms.repository.TestExecutionRepository;
 import com.hanq.easytpms.vo.TestDefectVO;
-import com.hanq.easytpms.vo.TestExecutionVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -17,12 +15,17 @@ import java.util.List;
 @Service
 public class TestDefectService {
 
-    TestDefectRepository testDefectRepository;
-    TestDefectHistoryRepository testDefectHistoryRepository;
+    private TestDefectRepository testDefectRepository;
+    private TestDefectHistoryRepository testDefectHistoryRepository;
+
+    @Autowired
+    public TestDefectService(TestDefectRepository testDefectRepository){
+        this.testDefectRepository = testDefectRepository;
+    }
 
 
     // 시나리오 결함 생성
-    public void insertTestDefect(TestDefectVO testDefectVO, BigInteger executionId){
+    public void insertTestDefect(TestDefectVO testDefectVO){
         testDefectRepository.insertTestDefect(testDefectVO);
     }
 
