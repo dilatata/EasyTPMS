@@ -23,7 +23,7 @@ public class TestDefectVO {
     private String createdBy;
     private Date createAt;
     private String defectTeam;
-    private String defectCharge;
+    private String defectCharger;
     private Date defectStartDueDate;
     private Date defectEndDueDate;
     private Date defectDate;
@@ -40,7 +40,7 @@ public class TestDefectVO {
                         @ColumnName("created_by") String createdBy,
                         @ColumnName("create_at") Date createAt,
                         @ColumnName("defect_team") String defectTeam,
-                        @ColumnName("defect_charge") String defectCharge,
+                        @ColumnName("defect_charger") String defectCharger,
                         @ColumnName("defect_start_due_date") Date defectStartDueDate,
                         @ColumnName("defect_end_due_date") Date defectEndDueDate,
                         @ColumnName("defect_date") Date defectDate,
@@ -57,7 +57,7 @@ public class TestDefectVO {
         this.createdBy = createdBy;
         this.createAt = createAt;
         this.defectTeam = defectTeam;
-        this.defectCharge = defectCharge;
+        this.defectCharger = defectCharger;
         this.defectStartDueDate = defectStartDueDate;
         this.defectEndDueDate = defectEndDueDate;
         this.defectDate = defectDate;

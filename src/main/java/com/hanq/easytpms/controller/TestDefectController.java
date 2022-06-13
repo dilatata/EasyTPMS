@@ -16,7 +16,7 @@ import java.math.BigInteger;
 @Slf4j
 public class TestDefectController {
 
-     private final TestDefectService testDefectService;
+    private final TestDefectService testDefectService;
     private Jdbi jdbi;
 
     @Autowired
@@ -25,7 +25,7 @@ public class TestDefectController {
         this.jdbi = jdbi;
         jdbi.useHandle(dao -> {
             dao.execute("CREATE TABLE IF NOT EXISTS defect(" +
-                    "defect_id BIGINT NOT NULL AUTO_INCREMENT, " +
+                    "defect_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
                     "execution_id BIGINT NOT NULL, " +
                     " defect_category VARCHAR(100) NULL," +
                     " defect_contents VARCHAR(2000) NOT NULL," +
@@ -33,15 +33,14 @@ public class TestDefectController {
                     " created_by VARCHAR(100) NULL," +
                     " create_at DATE NULL," +
                     " defect_team VARCHAR(100) NOT NULL," +
-                    " defect_charger VARCHAR(100) NOT NULL," +
-                    " defect_start_due_date DATE NOT NULL," +
-                    " defect_end_due_date DATE NOT NULL," +
-                    " defect_date DATE NOT NULL," +
+                    " defect_charger VARCHAR(100) NULL," +
+                    " defect_start_due_date DATE NULL," +
+                    " defect_end_due_date DATE NULL," +
+                    " defect_date DATE NULL," +
                     " defect_action_yn VARCHAR(5) NOT NULL," +
-                    " defect_action_contents VARCHAR(2000) NOT NULL," +
+                    " defect_action_contents VARCHAR(2000) NULL," +
                     " defect_check VARCHAR(5) NOT NULL," +
-                    " defect_check_date DATE NOT NULL," +
-                    "PRIMARY KEY ('defect_id')");
+                    " defect_check_date DATE NULL) ");
         });
     }
 
@@ -54,15 +53,23 @@ public class TestDefectController {
 
     // 시나리오 결함 개별 삭제
     @DeleteMapping("/defect/delete/{executionId}")
-    public void deleteTestDefect(@PathVariable("executionId") BigInteger executionId) {
+    public void deleteTestDefect(@PathVariable("executionId") Long executionId) {
         testDefectService.deleteTestDefect(executionId);
     }
 
     // 연관 결함 리스트 조회
     @GetMapping(value = "/defect/{executionId}")
-    public Object findTestDefectListBYExecutionId(@PathVariable("executionId") BigInteger executionId) {
-        return testDefectService.findTestDefectListBYExecutionId(executionId);
+    public Object findTestDefectListByExecutionId(@PathVariable("executionId") Long executionId) {
+        return testDefectService.findTestDefectListByExecutionId(executionId);
     }
+
+
+    // 결함 상세 조회
+    @GetMapping("/defect/detail/{defectId}")
+    public TestDefectVO findTestDefectInfoByDefectId(@PathVariable("defectId") Long defectId){
+        return testDefectService.findTestDefectInfoByDefectId(defectId);
+    }
+
 
     // 결함 리스트 조회 // join projectName 에 해당하는 executionId 를 갖고 있는 data defect 테이블에서 찾아오기
     @GetMapping("/defect/list/{projectName}")
@@ -73,7 +80,6 @@ public class TestDefectController {
     // 결함 세부조건 작성(수정) -> history 생성
     @PostMapping("/defect/edit/detail/{defectId}")
     public void editTestDefect(@RequestBody TestDefectVO request) {
-
         testDefectService.editTestDefect(request);
 
     }

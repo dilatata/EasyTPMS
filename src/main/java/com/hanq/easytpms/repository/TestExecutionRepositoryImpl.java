@@ -39,6 +39,7 @@ public class TestExecutionRepositoryImpl implements TestExecutionRepository{
                 .bind("projectName", projectName)
                 .map(new TestExecutionRowMapper())
                 .list();
+        handle.close();
         return testExecutionVOList;
     }
 
@@ -49,6 +50,7 @@ public class TestExecutionRepositoryImpl implements TestExecutionRepository{
                 .bind("id", id)
                 .map(new TestExecutionRowMapper())
                 .one();
+        handle.close();
         return testExecutionVO;
     }
 
@@ -69,7 +71,7 @@ public class TestExecutionRepositoryImpl implements TestExecutionRepository{
 
     @Override
     public void deleteTestExecution(Long executionId) {
-        jdbi.useHandle(dao -> dao.createUpdate("Delete execution where execution_id = :executionId")
+        jdbi.useHandle(dao -> dao.createUpdate("DELETE execution WHERE execution_id = :executionId")
                 .bind("executionId", executionId)
                 .execute()
         );

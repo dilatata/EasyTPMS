@@ -20,7 +20,7 @@ public class TestDefectRowMapper implements RowMapper<TestDefectVO> {
                 rs.getString("created_by"),
                 rs.getDate("create_at"),
                 rs.getString("defect_team"),
-                rs.getString("defect_charge"),
+                rs.getString("defect_charger"),
                 rs.getDate("defect_start_due_date"),
                 rs.getDate("defect_end_due_date"),
                 rs.getDate("defect_date"),

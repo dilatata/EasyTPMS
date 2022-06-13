@@ -56,10 +56,7 @@ public class TestExecutionService {
         Date executionDate = request.getExecutionDate();
         String execStatus = request.getExecStatus();
         String execResult = request.getExecResult();
-        System.out.println(executionId);
-        System.out.println(executionDate);
-        System.out.println(execStatus);
-        System.out.println(execResult);
+
         testExecutionRepository.updateTestExecution(executionId, executionDate, execStatus, execResult);
     }
 }
