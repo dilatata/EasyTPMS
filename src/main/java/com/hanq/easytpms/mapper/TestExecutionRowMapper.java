@@ -63,7 +63,7 @@ public class TestExecutionRowMapper implements RowMapper<TestExecutionVO> {
                 rs.getString("screen_id"),
                 rs.getString("screen_name"),
                 rs.getString("test_case_id"),
-                rs.getString("test_case_type"),
+                rs.getString("test_case_name"),
                 rs.getDate("exec_due_date"),
                 rs.getString("tester"),
                 rs.getString("test_target_type"),

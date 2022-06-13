@@ -64,5 +64,4 @@ public interface TestDefectRepository {
 
 
     // 결함 첨부파일 생성
-
 }

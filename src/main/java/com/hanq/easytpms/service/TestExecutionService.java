@@ -36,26 +36,30 @@ public class TestExecutionService {
     }
 
     //  execution 단독 조회
-    public TestExecutionVO getTestExecutionInfo(BigInteger executionId) {
+    public TestExecutionVO getTestExecutionInfo(Long executionId) {
         return testExecutionRepository.getTestExecutionInfoByExecutionId(executionId);
     }
 
     // execution 단독 수정 -> request mapping 해서 저장
-    public void editTestExecution(TestExecutionVO request, BigInteger executionId) {
+    public void editTestExecution(TestExecutionVO request) {
         testExecutionRepository.editTestExecution(request);
     }
 
     // execution 단독 삭제
-    public void deleteTestExecution(BigInteger executionId) {
+    public void deleteTestExecution(Long executionId) {
         testExecutionRepository.deleteTestExecution(executionId);
     }
 
     // execution 결과입력 -> TestExecutionVO 말고 ExecutionID 수행일 수행상태 수행결과 전달
     public void updateTestExecution(TestExecutionVO request) {
-        BigInteger executionId = BigInteger.valueOf(request.getExecutionId());
+        Long executionId = request.getExecutionId();
         Date executionDate = request.getExecutionDate();
         String execStatus = request.getExecStatus();
         String execResult = request.getExecResult();
+        System.out.println(executionId);
+        System.out.println(executionDate);
+        System.out.println(execStatus);
+        System.out.println(execResult);
         testExecutionRepository.updateTestExecution(executionId, executionDate, execStatus, execResult);
     }
 }

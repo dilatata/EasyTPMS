@@ -32,8 +32,8 @@ public class TestDefectVO {
     private String defectCheck;
     private Date defectCheckDate;
 
-    public TestDefectVO(@ColumnName("execution_id") Long executionId ,
-                        @ColumnName("defect_id") Long defectId,
+    public TestDefectVO(@ColumnName("execution_id") long executionId ,
+                        @ColumnName("defect_id") long defectId,
                         @ColumnName("defect_category") String defectCategory,
                         @ColumnName("defect_contents") String defectContents,
                         @ColumnName("defectStatus") String defectStatus,

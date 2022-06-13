@@ -76,20 +76,20 @@ public class TestExecutionController {
 
 
     // execution 상세 조회
-    @GetMapping("/execution/list/{executionId}")
+    @GetMapping("/execution/detail/{executionId}")
     public TestExecutionVO getTestExecution(@PathVariable("executionId") Long executionId){
-        return testExecutionService.getTestExecutionInfo(BigInteger.valueOf(executionId));
+        return testExecutionService.getTestExecutionInfo(executionId);
     }
 
     // execution 단독 수정 -> 결과 입력X
     @PostMapping("/execution/update/{executionId}")
-    public void editTestExecution(@RequestBody TestExecutionVO request, BigInteger executionId) {
-        testExecutionService.editTestExecution(request, executionId);
+    public void editTestExecution(@RequestBody TestExecutionVO request) {
+        testExecutionService.editTestExecution(request);
     }
 
     // execution 단독 삭제
     @DeleteMapping("/execution/delete/{executionId}")
-    public void deleteTestExecution(@PathVariable("executionId") BigInteger executionId) {
+    public void deleteTestExecution(@PathVariable("executionId") Long executionId) {
         testExecutionService.deleteTestExecution(executionId);
     }
 
