@@ -69,7 +69,6 @@ public class TestDefectService {
     // 결함조치 결과 작성 -> defectId defect_status defect_date, defect_action_yn, defect_action_contents
     // defect_action_yn - y (defect status 조치완료) / n (변경필요 없음)
     public void updateTestDefect(TestDefectVO request) {
-        System.out.println(request.getDefectActionYn());
         if(request.getDefectActionYn().equals("y")){
         Long defectId = request.getDefectId();
         String defectStatus = request.getDefectStatus(); // 조건문 필요
@@ -104,7 +103,8 @@ public class TestDefectService {
         if(defectCheck == "y") {
             testDefectRepository.updateTestDefectCheckY(defectId,defectStatus, defectCheck, defectCheckDate); // check 결과 따라서 조건문으로 만들기
         }else{
-            testDefectRepository.updateTestDefectCheckN(defectId);
+            // defectId, defectStatus = "재결함", defect_action_yn=n, defectCheck = n(이미 n)
+            testDefectRepository.updateTestDefectCheckN(defectId, defectStatus, defectActionYn);
         }
 //        testDefectHistoryRepository.insertTestDefectHistory(defectId, executionId, defectStatus, defectTeam, defectCharger, defectActionContents);
     }

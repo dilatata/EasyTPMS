@@ -80,7 +80,7 @@ public interface TestDefectRepository {
     @SqlUpdate("UPDATE defect SET defect_status = '재결함', defect_date = NULL WHERE defect_id = :id")
     @OutParameter(name = "defectId",  sqlType = java.sql.Types.BIGINT)
     @OutParameter(name = "executionId",  sqlType = java.sql.Types.BIGINT)
-    void updateTestDefectCheckN(@Bind("defect_id") Long id);
+    void updateTestDefectCheckN(@Bind("defect_id") Long id, @Bind("defectStatus") String defectStatus, @Bind("defectActionYn") String defectActionYn);
 
 
     // 결함 첨부파일 생성

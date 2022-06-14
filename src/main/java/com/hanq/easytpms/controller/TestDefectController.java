@@ -23,6 +23,8 @@ public class TestDefectController {
     public TestDefectController(TestDefectService testDefectService, Jdbi jdbi) {
         this.testDefectService = testDefectService;
         this.jdbi = jdbi;
+
+        // defect table
         jdbi.useHandle(dao -> {
             dao.execute("CREATE TABLE IF NOT EXISTS defect(" +
                     "defect_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
@@ -42,7 +44,22 @@ public class TestDefectController {
                     " defect_check VARCHAR(5) NOT NULL," +
                     " defect_check_date DATE NULL) ");
         });
+
+        // defect history table
+        jdbi.useHandle(dao -> {
+            dao.execute("CREATE TABLE IF NOT EXISTS defect_history(" +
+                    "defect_history_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                    "defect_id BigInt NOT NULL" +
+                    "execution_id BIGINT NOT NULL, " +
+                    " defect_status VARCHAR(100) NULL," +
+                    " defect_action_date DATE NOT NULL," +
+                    " defect_team VARCHAR(100) NOT NULL," +
+                    " defect_charger VARCHAR(100) NULL," +
+                    " defect_action_contents VARCHAR(2000) NULL)" );      });
     }
+
+
+
 
 
     // 시나리오 결함 생성 -> defect history 생성 시작점?

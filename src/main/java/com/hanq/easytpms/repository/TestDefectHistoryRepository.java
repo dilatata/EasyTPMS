@@ -19,6 +19,6 @@ public interface TestDefectHistoryRepository {
                                  @Bind("execution_id") BigInteger executionId,
                                  @Bind("defect_status") String defectStatus,
                                  @Bind("defect_team") String defectTeam,
-                                 @Bind("defect_charge") String defectCharge,
+                                 @Bind("defect_charger") String defectCharger,
                                  @Bind("defect_action_contents") String defectActionContents);
 }

@@ -77,7 +77,7 @@ public class TestDefectRepositoryImpl implements TestDefectRepository{
         jdbi.useHandle(dao -> dao.createUpdate("UPDATE defect SET defect_category = :defectCategory, defect_contents = :defectContents, defect_status = :defectStatus," +
                 "created_by = :createdBy, create_at = :createAt, defect_team = :defectTeam, defect_charger = :defectCharger," +
                 "defect_start_due_date = :defectStartDueDate, defect_end_due_date = :defectEndDueDate, defect_date = :defectDate " +
-//                ", defect_action_yn = :defectActionYn, defect_action_contents = :defectActionContents " +
+//                ", defect_action_yn = :defectActionYn, defect_action_contents = :defectActionContents " + // edit 하는 상태에서 변경에 들어가야할까?
                         "WHERE defect_id = :defectId")
                 .bindBean(request)
                 .defineNamedBindings()
@@ -100,11 +100,23 @@ public class TestDefectRepositoryImpl implements TestDefectRepository{
 
     @Override
     public void updateTestDefectCheckY(Long id, String defectStatus, String defectCheck, Date defectCheckDate) {
-
+        jdbi.useHandle(dao->dao.createUpdate("UPDATE defect SET defect_status=:defectStatus, defect_check = defectCheck, defect_check_date = :defectCheckDate WHERE defect_id =defectId")
+                .bind("defectStatus", "확인 완료")
+                .bind("defectCheck", defectCheck)
+                .bind("defectCheckDate", defectCheckDate)
+                .bind("defectId", id)
+                .execute()
+        );
     }
 
     @Override
-    public void updateTestDefectCheckN(Long id) {
+    public void updateTestDefectCheckN(Long id, String defectStatus, String defectActionYn) {
+        jdbi.useHandle(dao->dao.createUpdate("UPDATE defect SET defect_status=:defectStatus, defect_check = defectCheck, defect_check_date = :defectCheckDate WHERE defect_id =defectId")
+                .bind("defectStatus", "재결함")
+                .bind("defectId", id)
+                .bind("defectActionYn", "n")
+                .execute()
+        );
 
     }
 }
