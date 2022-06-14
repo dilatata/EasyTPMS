@@ -17,7 +17,7 @@ import java.math.BigInteger;
 public class TestDefectController {
 
     private final TestDefectService testDefectService;
-    private Jdbi jdbi;
+    private final Jdbi jdbi;
 
     @Autowired
     public TestDefectController(TestDefectService testDefectService, Jdbi jdbi) {
@@ -49,7 +49,7 @@ public class TestDefectController {
         jdbi.useHandle(dao -> {
             dao.execute("CREATE TABLE IF NOT EXISTS defect_history(" +
                     "defect_history_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                    "defect_id BigInt NOT NULL" +
+                    "defect_id BigInt NOT NULL," +
                     "execution_id BIGINT NOT NULL, " +
                     " defect_status VARCHAR(100) NULL," +
                     " defect_action_date DATE NOT NULL," +
