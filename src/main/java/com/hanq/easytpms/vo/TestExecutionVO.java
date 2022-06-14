@@ -94,6 +94,5 @@ public class TestExecutionVO {
         this.executionDate= executionDate;
         this.execStatus = execStatus;
         this.execResult = execResult;
-
     }
 }

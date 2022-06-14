@@ -78,6 +78,7 @@ public class TestExecutionRepositoryImpl implements TestExecutionRepository{
     }
 
 
+    //  * exec_status -> 성공 / 실패 / 제외 선택 따라서 다른 결과 실행되어야 함 *
     @Override
     public void updateTestExecution(Long executionId, Date executionDate, String execStatus, String execResult) {
         jdbi.useHandle(dao->dao.createUpdate("UPDATE execution SET execution_date = :executionDate, exec_status = :execStatus, exec_result = :execResult WHERE execution_id = :executionId")

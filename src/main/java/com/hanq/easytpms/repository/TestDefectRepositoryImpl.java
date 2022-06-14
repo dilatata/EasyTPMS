@@ -100,7 +100,7 @@ public class TestDefectRepositoryImpl implements TestDefectRepository{
 
     @Override
     public void updateTestDefectCheckY(Long id, String defectStatus, String defectCheck, Date defectCheckDate) {
-        jdbi.useHandle(dao->dao.createUpdate("UPDATE defect SET defect_status=:defectStatus, defect_check = :defectCheck, defect_check_date = :defectCheckDate WHERE defect_id =defectId")
+        jdbi.useHandle(dao->dao.createUpdate("UPDATE defect SET defect_status=:defectStatus, defect_check = :defectCheck, defect_check_date = :defectCheckDate WHERE defect_id = :defectId")
                 .bind("defectStatus", "확인 완료")
                 .bind("defectCheck", defectCheck)
                 .bind("defectCheckDate", defectCheckDate)
@@ -111,7 +111,7 @@ public class TestDefectRepositoryImpl implements TestDefectRepository{
 
     @Override
     public void updateTestDefectCheckN(Long id, String defectStatus, String defectActionYn) {
-        jdbi.useHandle(dao->dao.createUpdate("UPDATE defect SET defect_status = :defectStatus, defect_check = :defectCheck, defect_check_date = :defectCheckDate WHERE defect_id =defectId")
+        jdbi.useHandle(dao->dao.createUpdate("UPDATE defect SET defect_status = :defectStatus, defect_action_yn = :defectActionYn WHERE defect_id = :defectId")
                 .bind("defectStatus", "재결함")
                 .bind("defectId", id)
                 .bind("defectActionYn", "n")
