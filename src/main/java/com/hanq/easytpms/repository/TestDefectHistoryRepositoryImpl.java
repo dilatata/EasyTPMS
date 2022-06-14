@@ -3,8 +3,6 @@ package com.hanq.easytpms.repository;
 import org.jdbi.v3.core.Jdbi;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigInteger;
-
 @Repository
 public class TestDefectHistoryRepositoryImpl implements TestDefectHistoryRepository{
     private Jdbi jdbi;

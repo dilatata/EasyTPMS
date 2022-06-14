@@ -2,13 +2,11 @@ package com.hanq.easytpms.service;
 
 import com.hanq.easytpms.repository.TestDefectHistoryRepository;
 import com.hanq.easytpms.repository.TestDefectRepository;
-import com.hanq.easytpms.repository.TestExecutionRepository;
 import com.hanq.easytpms.vo.TestDefectVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 

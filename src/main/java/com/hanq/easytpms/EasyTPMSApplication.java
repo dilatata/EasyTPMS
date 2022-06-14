@@ -1,7 +1,6 @@
 package com.hanq.easytpms;
 
 import org.jdbi.v3.core.Jdbi;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -81,7 +80,17 @@ public class EasyTPMSApplication {
 					"foreign key (defect_id) references defect (defect_id), " +
 					"foreign key (execution_id) references execution(execution_id)) ");
 		});
-	}
+
+		// user table
+		jdbi.useHandle(dao -> {
+			dao.execute("CREATE TABLE IF NOT EXISTS tpms_user(" +
+					"id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					"user_id VARCHAR(255) NOT NULL, " +
+					"user_password VARCHAR(255) NOT NULL, " +
+					"user_name VARCHAR(100) NOT NULL, " +
+					"user_email VARCHAR(100) NULL, " +
+					"role_type VARCHAR(10) NOT NULL)");
+		});	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(EasyTPMSApplication.class, args);

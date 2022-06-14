@@ -10,8 +10,6 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
 import org.springframework.stereotype.Repository;
-
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -49,7 +47,7 @@ public interface TestExecutionRepository {
 
     // execution 단독 삭제 O
     @Transaction
-    @SqlUpdate("DELETE FROM execution WHERE executionId = :executionId")
+    @SqlUpdate("DELETE FROM execution WHERE execution_id = :executionId")
     @OutParameter(name = "executionId",  sqlType = java.sql.Types.BIGINT)
     void deleteTestExecution(@Bind("execution_id") Long executionId);
 

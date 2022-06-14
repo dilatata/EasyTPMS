@@ -2,7 +2,6 @@ package com.hanq.easytpms.controller;
 
 import com.hanq.easytpms.service.TestExecutionService;
 import lombok.extern.slf4j.Slf4j;
-import org.jdbi.v3.core.Jdbi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -19,7 +18,7 @@ public class TestExecutionController {
 
 
     @Autowired
-    public TestExecutionController(Jdbi jdbi, TestExecutionService testExecutionService) {
+    public TestExecutionController(TestExecutionService testExecutionService) {
         this.testExecutionService = testExecutionService;
     }
 

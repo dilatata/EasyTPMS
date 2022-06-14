@@ -3,7 +3,6 @@ package com.hanq.easytpms.controller;
 import com.hanq.easytpms.service.TestDefectService;
 import com.hanq.easytpms.vo.TestDefectVO;
 import lombok.extern.slf4j.Slf4j;
-import org.jdbi.v3.core.Jdbi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -17,7 +16,7 @@ public class TestDefectController {
     private final TestDefectService testDefectService;
 
     @Autowired
-    public TestDefectController(TestDefectService testDefectService, Jdbi jdbi) {
+    public TestDefectController(TestDefectService testDefectService) {
         this.testDefectService = testDefectService;
     }
 

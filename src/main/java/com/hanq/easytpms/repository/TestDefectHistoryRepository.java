@@ -7,7 +7,6 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigInteger;
 
 @Repository
 public interface TestDefectHistoryRepository {

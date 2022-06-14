@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
-import org.springframework.boot.SpringApplicationExtensionsKt;
 
-import java.math.BigInteger;
 import java.util.Date;
 
 @Data

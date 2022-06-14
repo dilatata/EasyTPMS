@@ -1,14 +1,10 @@
 package com.hanq.easytpms.service;
 
-import com.hanq.easytpms.mapper.TestExecutionRowMapper;
 import com.hanq.easytpms.repository.TestExecutionRepository;
-import com.hanq.easytpms.repository.TestExecutionRepositoryImpl;
 import com.hanq.easytpms.vo.TestExecutionVO;
-import org.jdbi.v3.core.Jdbi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
