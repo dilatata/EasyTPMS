@@ -14,9 +14,9 @@ public class TestDefectHistoryRepositoryImpl implements TestDefectHistoryReposit
     }
 
     @Override
-    public void insertTestDefectHistory(BigInteger defectId, BigInteger executionId, String defectStatus, String defectTeam, String defectCharger, String defectActionContents) {
-        jdbi.useHandle(dao->dao.createUpdate("INSERT INTO defect ( defect_id, execution_id, defect_status, defect_team, defect_charger, defect_action_content)" +
-                        "VALUES (:defectId, :executionId, :defectStatus, :defectTeam, :defectCharger, :defectActionContents)")
+    public void insertTestDefectHistory(Long defectId, Long executionId, String defectStatus, String defectTeam, String defectCharger, String defectActionContents) {
+        jdbi.useHandle(dao->dao.createUpdate("INSERT INTO defect_history ( defect_id, execution_id, defect_status, defect_team, defect_charger, defect_action_contents, defect_action_date)" +
+                        "VALUES (:defectId, :executionId, :defectStatus, :defectTeam, :defectCharger, :defectActionContents, now())")
                 .bind("defectId", defectId)
                 .bind("executionId",executionId)
                 .bind("defectStatus", defectStatus)

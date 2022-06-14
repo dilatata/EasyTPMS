@@ -16,13 +16,13 @@ import java.util.List;
 public class TestDefectService {
 
     private final TestDefectRepository testDefectRepository;
-//    private final TestDefectHistoryRepository testDefectHistoryRepository;
+    private final TestDefectHistoryRepository testDefectHistoryRepository;
 
 
     @Autowired
-    public TestDefectService(TestDefectRepository testDefectRepository) {// ,  TestDefectHistoryRepository testDefectHistoryRepository){
+    public TestDefectService(TestDefectRepository testDefectRepository,  TestDefectHistoryRepository testDefectHistoryRepository){
         this.testDefectRepository = testDefectRepository;
-//        this.testDefectHistoryRepository = testDefectHistoryRepository;
+        this.testDefectHistoryRepository = testDefectHistoryRepository;
     }
 
 
@@ -75,12 +75,12 @@ public class TestDefectService {
         Date defectDate = request.getDefectDate(); // 조치확인 y로 변한 날 변경해
         String defectActionYn = request.getDefectActionYn();
         String defectActionContents = request.getDefectActionContents();
-        BigInteger executionId = BigInteger.valueOf(request.getExecutionId());
+        Long executionId = request.getExecutionId();
         String defectTeam = request.getDefectTeam();;
         String defectCharger = request.getDefectCharger();
 
         testDefectRepository.updateTestDefectY(defectId, defectStatus, defectDate, defectActionYn, defectActionContents);
-//        testDefectHistoryRepository.insertTestDefectHistory(defectId, executionId, defectStatus, defectTeam, defectCharger, defectActionContents);
+        testDefectHistoryRepository.insertTestDefectHistory(defectId, executionId, defectStatus, defectTeam, defectCharger, defectActionContents);
         }else{
             System.out.println("여긴 뭐가 들어가야 할까");
         }
