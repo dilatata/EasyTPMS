@@ -103,13 +103,14 @@ public class EasyTPMSApplication {
 		});
 
 		// common code detail
+		// order_number 더 생각해봐야함
 		jdbi.useHandle(dao -> {
 			dao.execute("CREATE TABLE IF NOT EXISTS common_code_detail (" +
 					"code_detail_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
 					"code_group_id BIGINT NOT NULL, " +
 					"code_detail_name VARCHAR(100) NOT NULL, " +
 					"code_detail_desc VARCHAR(2000) NOT NULL, " +
-					"order_num BIGINT NULL, " + //order 로만 하면 org.springframework.beans.BeanInstantiationException : ~~ : expected "identifier" error
+					"order_num BIGINT UNIQUE NULL, " + //order 로만 하면 org.springframework.beans.BeanInstantiationException : ~~ : expected "identifier" error
 					"use_yn VARCHAR(5) NOT NULL," +
 					"foreign key (code_group_id) references common_code_group(code_group_id)" +
 					")");

@@ -15,20 +15,20 @@ public class CommonCodeDetailVO {
     private Long codeGroupId;
     private String codeDetailName;
     private String codeDetailDesc;
-    private Long order;
+    private Long orderNum;
     private String useYn;
 
     public CommonCodeDetailVO(@ColumnName("code_detail_id") long codeDetailId,
                               @ColumnName("code_group_id") long codeGroupId,
                              @ColumnName("code_detail_name") String codeDetailName,
                              @ColumnName("code_detail_desc") String codeDetailDesc,
-                             @ColumnName("order") long order,
+                             @ColumnName("order_num") long orderNum,
                              @ColumnName("use_yn") String useYn) {
         this.codeDetailId = codeDetailId;
         this.codeGroupId = codeGroupId;
         this.codeDetailName = codeDetailName;
         this.codeDetailDesc = codeDetailDesc;
-        this.order = order;
+        this.orderNum = orderNum;
         this.useYn = useYn;
     }
 }
