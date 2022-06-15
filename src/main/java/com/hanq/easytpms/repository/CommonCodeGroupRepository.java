@@ -19,7 +19,7 @@ public interface CommonCodeGroupRepository {
     // code group 생성
     @Transaction
     @SqlUpdate("INSERT INTO common_code_group(code_group_name, code_group_desc, use_yn) " +
-            "VALUES(:codeGroupName, :codeGroupDesc, :useYn,) ")
+            "VALUES(:codeGroupName, :codeGroupDesc, :useYn) ")
     @GetGeneratedKeys
     void insertCodeGroup(@BindBean CommonCodeGroupVO commonCodeGroupVO);
 
@@ -40,7 +40,7 @@ public interface CommonCodeGroupRepository {
 
 
     // code group List 조회
-    @SqlQuery("SELECT * FROM common_code_group WHERE code_group_id = :codeGroupId")
+    @SqlQuery("SELECT * FROM common_code_group")
     @RegisterBeanMapper(UserVO.class)
     List<CommonCodeGroupVO> getCodeGroupInfoList();
 

@@ -1,7 +1,6 @@
 package com.hanq.easytpms.repository;
 
 import com.hanq.easytpms.vo.CommonCodeDetailVO;
-import com.hanq.easytpms.vo.CommonCodeGroupVO;
 import com.hanq.easytpms.vo.UserVO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -20,7 +19,7 @@ public interface CommonCodeDetailRepository {
     // CodeDetail 생성
     @Transaction
     @SqlUpdate("INSERT INTO common_code_detail (code_group_id, code_detail_name, code_detail_desc, order_num, use_yn) " +
-            "VALUES(codeGroupId, :codeDetailName, :codeDetailDesc, :order_num, :useYn,) ")
+            "VALUES(codeGroupId, :codeDetailName, :codeDetailDesc, :order_num, :useYn) ")
     @GetGeneratedKeys
     void insertCodeDetail(@BindBean CommonCodeDetailVO commonCodeDetailVO);
 
