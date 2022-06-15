@@ -61,4 +61,9 @@ public interface TestExecutionRepository {
                              @Bind("exec_status") String execStatus,
                              @Bind("exec_result") String execResult);
 
+    @Transaction
+    @SqlUpdate("UPDATE execution SET exec_status = :execStatus WHERE execution_id = :executionId")
+    @OutParameter(name = "executionId",  sqlType = java.sql.Types.BIGINT)
+    void execStatusChange(@Bind("execution_id") Long executionId, String execStatus);
+
 }

@@ -90,7 +90,7 @@ public class TestDefectRepositoryImpl implements TestDefectRepository{
         jdbi.useHandle(dao -> dao.createUpdate("UPDATE defect SET defect_action_yn = :defectActionYn, defect_action_contents = :defectActionContents, " +
                         "defect_status = :defectStatus, defect_date = :defectDate WHERE defect_id = :defectId")
                 .bind("defectId", id)
-                .bind("defectStatus", "조치완료") // 여기서 할지 화면에서 조치완료가 오도록할지
+                .bind("defectStatus", defectStatus)
                 .bind("defectDate",defectDate)
                 .bind("defectActionYn", defectActionYn)
                 .bind("defectActionContents",defectActionContents)
@@ -101,7 +101,7 @@ public class TestDefectRepositoryImpl implements TestDefectRepository{
     @Override
     public void updateTestDefectCheckY(Long id, String defectStatus, String defectCheck, Date defectCheckDate) {
         jdbi.useHandle(dao->dao.createUpdate("UPDATE defect SET defect_status=:defectStatus, defect_check = :defectCheck, defect_check_date = :defectCheckDate WHERE defect_id = :defectId")
-                .bind("defectStatus", "확인 완료")
+                .bind("defectStatus", defectStatus)
                 .bind("defectCheck", defectCheck)
                 .bind("defectCheckDate", defectCheckDate)
                 .bind("defectId", id)
@@ -112,9 +112,9 @@ public class TestDefectRepositoryImpl implements TestDefectRepository{
     @Override
     public void updateTestDefectCheckN(Long id, String defectStatus, String defectActionYn) {
         jdbi.useHandle(dao->dao.createUpdate("UPDATE defect SET defect_status = :defectStatus, defect_action_yn = :defectActionYn WHERE defect_id = :defectId")
-                .bind("defectStatus", "재결함")
+                .bind("defectStatus", defectStatus)
                 .bind("defectId", id)
-                .bind("defectActionYn", "n")
+                .bind("defectActionYn",defectActionYn )
                 .execute()
         );
 

@@ -5,6 +5,7 @@ import org.jdbi.v3.core.mapper.reflect.ColumnName;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.util.List;
 
 @Data
 @Getter
@@ -39,6 +40,7 @@ public class TestExecutionVO {
     private Date executionDate;
     private String execStatus;
     private String execResult;
+    private List<TestDefectVO> testDefectList;
 
     public TestExecutionVO(@ColumnName("execution_id") long executionId,
                            @ColumnName("project_name") String projectName,

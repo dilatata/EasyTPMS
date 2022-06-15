@@ -2,6 +2,8 @@ package com.hanq.easytpms.service;
 
 import com.hanq.easytpms.repository.TestDefectHistoryRepository;
 import com.hanq.easytpms.repository.TestDefectRepository;
+import com.hanq.easytpms.repository.TestExecutionRepository;
+import com.hanq.easytpms.vo.TestDefectHistoryVO;
 import com.hanq.easytpms.vo.TestDefectVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,14 +15,16 @@ import java.util.List;
 @Service
 public class TestDefectService {
 
+    private final TestExecutionRepository testExecutionRepository;
     private final TestDefectRepository testDefectRepository;
     private final TestDefectHistoryRepository testDefectHistoryRepository;
 
 
     @Autowired
-    public TestDefectService(TestDefectRepository testDefectRepository,  TestDefectHistoryRepository testDefectHistoryRepository){
+    public TestDefectService(TestDefectRepository testDefectRepository,  TestDefectHistoryRepository testDefectHistoryRepository, TestExecutionRepository testExecutionRepository){
         this.testDefectRepository = testDefectRepository;
         this.testDefectHistoryRepository = testDefectHistoryRepository;
+        this.testExecutionRepository = testExecutionRepository;
     }
 
 
@@ -61,7 +65,17 @@ public class TestDefectService {
         }else{
             request.setDefectStatus("New");
         }
+        // service 층을 facade / service로 나눌까?
+        TestDefectHistoryVO historyRequest = new TestDefectHistoryVO();
+        historyRequest.setDefectId(request.getDefectId());
+        historyRequest.setExecutionId(request.getExecutionId());
+        historyRequest.setDefectStatus(request.getDefectStatus());
+        historyRequest.setDefectTeam(request.getDefectTeam());
+        historyRequest.setDefectCharge(request.getDefectCharger());
+        historyRequest.setDefectActionContents(request.getDefectActionContents());
+
         testDefectRepository.editTestDefect(request);
+        testDefectHistoryRepository.insertTestDefectHistory2(historyRequest);
     }
 
     // 결함조치 결과 작성 -> defectId defect_status defect_date, defect_action_yn, defect_action_contents
@@ -69,7 +83,8 @@ public class TestDefectService {
     public void updateTestDefect(TestDefectVO request) {
         if(request.getDefectActionYn().equals("y")){
         Long defectId = request.getDefectId();
-        String defectStatus = request.getDefectStatus(); // 조건문 필요
+//        String defectStatus = request.getDefectStatus(); // 조건문 필요 (화면에서 "조치완료" 전달시 )
+        String defectStatus = "조치완료";
         Date defectDate = request.getDefectDate(); // 조치확인 y로 변한 날 변경해
         String defectActionYn = request.getDefectActionYn();
         String defectActionContents = request.getDefectActionContents();
@@ -88,7 +103,7 @@ public class TestDefectService {
     public void updateTestDefectCheck(TestDefectVO request){
         Long defectId = request.getDefectId();
         Long executionId = request.getExecutionId();
-        String defectStatus = request.getDefectStatus(); //-> 조치 여부 y 이면 조치 완료
+//        String defectStatus = request.getDefectStatus(); //-> 조치 여부 y 이면 조치 완료
         Date defectDate = request.getDefectDate(); // 조치 확인 n인 경우 비우나?
         String defectActionYn = request.getDefectActionYn();
         String defectActionContents = request.getDefectActionContents();
@@ -101,12 +116,14 @@ public class TestDefectService {
         Date defectCheckDate = request.getDefectCheckDate(); // request.getDefectCheck y인 경우만 생성 n -> status"재결함", defectdate null값으로
         if(request.getDefectCheck().equals("y")) {
             String defectStatusCheckY = "확인 완료";
-            testDefectRepository.updateTestDefectCheckY(defectId,defectStatus, defectCheck, defectCheckDate);
+            testDefectRepository.updateTestDefectCheckY(defectId, defectStatusCheckY, defectCheck, defectCheckDate);
             testDefectHistoryRepository.insertTestDefectHistory(defectId, executionId, defectStatusCheckY, defectTeam, defectCharger, defectActionContents);
+            // testExecutionRepository.checkY() -> exec_status '성공'
+            testExecutionRepository.execStatusChange(defectId, "성공");
         }else{
             // defectId, defectStatus = "재결함", defect_action_yn=n, defectCheck = n(이미 n)
             String defectStatusCheckN = "재결함";
-            testDefectRepository.updateTestDefectCheckN(defectId, defectStatus, defectActionYn);
+            testDefectRepository.updateTestDefectCheckN(defectId, defectStatusCheckN, defectActionYn);
             testDefectHistoryRepository.insertTestDefectHistory(defectId, executionId, defectStatusCheckN, defectTeam, defectCharger, defectActionContents);
         }
     }

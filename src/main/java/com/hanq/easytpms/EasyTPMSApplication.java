@@ -15,7 +15,7 @@ public class EasyTPMSApplication {
 		// execution table
 		jdbi.useHandle(dao -> {
 			dao.execute("CREATE TABLE IF NOT EXISTS execution(" +
-					"execution_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					" execution_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
 					" project_name VARCHAR(500) NULL," +
 					" test_type VARCHAR(100) NOT NULL," +
 					" scenario_type VARCHAR(100) NOT NULL," +
@@ -47,8 +47,8 @@ public class EasyTPMSApplication {
 		// defect table
 		jdbi.useHandle(dao -> {
 			dao.execute("CREATE TABLE IF NOT EXISTS defect(" +
-					"defect_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-					"execution_id BIGINT NOT NULL, " +
+					" defect_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					" execution_id BIGINT NOT NULL, " +
 					" defect_category VARCHAR(100) NULL," +
 					" defect_contents VARCHAR(2000) NOT NULL," +
 					" defect_status VARCHAR(100) NULL," +
@@ -69,28 +69,52 @@ public class EasyTPMSApplication {
 		// defect history table
 		jdbi.useHandle(dao -> {
 			dao.execute("CREATE TABLE IF NOT EXISTS defect_history(" +
-					"defect_history_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-					"defect_id BigInt NOT NULL," +
-					"execution_id BIGINT NOT NULL, " +
-					" defect_status VARCHAR(100) NULL," +
-					" defect_action_date DATE NOT NULL," +
+					" defect_history_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					" defect_id BigInt NOT NULL," +
+					" execution_id BIGINT NOT NULL, " +
+					" defect_status VARCHAR(100) NOT NULL," +
+					" defect_action_date DATE NULL," +
 					" defect_team VARCHAR(100) NOT NULL," +
 					" defect_charger VARCHAR(100) NULL," +
 					" defect_action_contents VARCHAR(2000) NULL," +
-					"foreign key (defect_id) references defect (defect_id), " +
-					"foreign key (execution_id) references execution(execution_id)) ");
+					" foreign key (defect_id) references defect (defect_id), " +
+					" foreign key (execution_id) references execution(execution_id)) ");
 		});
 
 		// user table
 		jdbi.useHandle(dao -> {
 			dao.execute("CREATE TABLE IF NOT EXISTS tpms_user(" +
-					"id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-					"user_id VARCHAR(255) NOT NULL, " +
-					"user_password VARCHAR(255) NOT NULL, " +
-					"user_name VARCHAR(100) NOT NULL, " +
-					"user_email VARCHAR(100) NULL, " +
-					"role_type VARCHAR(10) NOT NULL)");
-		});	}
+					" id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					" user_id VARCHAR(255) NOT NULL, " +
+					" user_password VARCHAR(255) NOT NULL, " +
+					" user_name VARCHAR(100) NOT NULL, " +
+					" user_email VARCHAR(100) NULL, " +
+					" role_type VARCHAR(10) NOT NULL)");
+		});
+
+		// common code group
+		jdbi.useHandle(dao -> {
+			dao.execute("CREATE TABLE IF NOT EXISTS common_code_group(" +
+					" code_group_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					" code_group_name VARCHAR(100) NOT NULL, " +
+					" code_group_desc VARCHAR(2000) NOT NULL, " +
+					" use_yn VARCHAR(5) NOT NULL " +
+					")");
+		});
+
+		// common code detail
+		jdbi.useHandle(dao -> {
+			dao.execute("CREATE TABLE IF NOT EXISTS common_code_detail (" +
+					"code_detail_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					"code_group_id BIGINT NOT NULL, " +
+					"code_detail_name VARCHAR(100) NOT NULL, " +
+					"code_detail_desc VARCHAR(2000) NOT NULL, " +
+					"order_num BIGINT NULL, " + //order 로만 하면 org.springframework.beans.BeanInstantiationException : ~~ : expected "identifier" error
+					"use_yn VARCHAR(5) NOT NULL," +
+					"foreign key (code_group_id) references common_code_group(code_group_id)" +
+					")");
+		});
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(EasyTPMSApplication.class, args);

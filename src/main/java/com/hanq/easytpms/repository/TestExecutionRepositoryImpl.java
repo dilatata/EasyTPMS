@@ -19,7 +19,7 @@ public class TestExecutionRepositoryImpl implements TestExecutionRepository{
     }
 
     @Override
-    public void insertTestExecution(TestExecutionVO testExecutionVO) {
+    public void insertTestExecution(TestExecutionVO testExecutionVO) { //exec_status default -> '미수행' table 설정 필요
         jdbi.useHandle(dao -> dao.createUpdate("INSERT INTO execution (project_name,test_type,scenario_type, biz_category, biz_detail, version, team_name, scenario_category, test_scenario_id, test_scenario_name, screen_id, screen_name, test_case_id, test_case_name, exec_due_date, tester, test_target_type, test_target_name, confirm_contents, test_data, build_name, build_version, note, execution_date, exec_status, exec_result) " +
                         "VALUES( :projectName,:testType,:scenarioType, :bizCategory, :bizDetail, :version, :teamName, :scenarioCategory, :testScenarioId, :testScenarioName, :screenId, :screenName, :testCaseId, :testCaseName, :execDueDate, :tester, :testTargetType, :testTargetName, :confirmContents, :testData, :buildName, :buildVersion, :note, :executionDate, '미수행' , :execResult)")
                 .bindBean(testExecutionVO)
@@ -83,5 +83,14 @@ public class TestExecutionRepositoryImpl implements TestExecutionRepository{
                 .bind("execResult", execResult)
                 .execute()
         );
+    }
+
+    @Override
+    public void execStatusChange(Long executionId, String execStatus) {
+        jdbi.useHandle(dao->dao.createUpdate("UPDATE execution SET exec_status = :execStatus WHERE execution_id = :executionId")
+                .bind("executionId", executionId)
+                .bind("execStatus", execStatus)
+                .execute()
+    );
     }
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Getter
@@ -29,6 +30,7 @@ public class TestDefectVO {
     private String defectActionContents;
     private String defectCheck;
     private Date defectCheckDate;
+    private List<TestDefectHistoryVO> testDefectHistoryVOList;
 
     public TestDefectVO(@ColumnName("execution_id") long executionId ,
                         @ColumnName("defect_id") long defectId,
