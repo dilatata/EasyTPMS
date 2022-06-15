@@ -35,7 +35,7 @@ public class EasyTPMSUserController {
     }
 
     // user 삭제
-    @PostMapping("user/delete/{id}")
+    @DeleteMapping("user/delete/{id}")
     public void deleteUser(@PathVariable("id") Long id) {
         easyTPMSUserService.deleteUser(id);
     }
