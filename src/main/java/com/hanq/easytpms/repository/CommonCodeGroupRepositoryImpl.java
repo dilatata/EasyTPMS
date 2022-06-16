@@ -27,7 +27,7 @@ public class CommonCodeGroupRepositoryImpl implements CommonCodeGroupRepository{
     @Override
     public void editCodeGroup(CommonCodeGroupVO commonCodeGroupVO) {
         jdbi.useHandle(dao->dao.createUpdate("UPDATE common_code_group SET " +
-                        "code_group_name = :codeGroupName, code_group_desc = :codeGroupDesc, use_yn = :useYn, " +
+                        "code_group_name = :codeGroupName, code_group_desc = :codeGroupDesc, use_yn = :useYn " +
                         "WHERE code_group_id = :codeGroupId ")
                 .bindBean(commonCodeGroupVO)
                 .defineNamedBindings()
@@ -35,9 +35,10 @@ public class CommonCodeGroupRepositoryImpl implements CommonCodeGroupRepository{
         );
     }
 
+    // 삭제시에 해당 codeGroupId fk 로 사용하는 codedetail 있으면 삭제 불가
     @Override
     public void deleteCodeGroup(Long codeGroupId) {
-        jdbi.useHandle(dao->dao.createUpdate("DELETE FROM common_code_group WHERE code_group_id = codeGroupId")
+        jdbi.useHandle(dao->dao.createUpdate("DELETE FROM common_code_group WHERE code_group_id = :codeGroupId")
                 .bind("codeGroupId",codeGroupId)
                 .execute()
         );

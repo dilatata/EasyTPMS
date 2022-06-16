@@ -14,8 +14,8 @@ public class CommonCodeGroupMapper implements  RowMapper<CommonCodeGroupVO>{
     public CommonCodeGroupVO map(ResultSet rs, StatementContext ctx) throws SQLException {
         return new CommonCodeGroupVO(rs.getLong("code_group_id"),
                 rs.getString("code_group_name"),
-                rs.getString("user_group_desc"),
-                rs.getString("user_use_yn")
+                rs.getString("code_group_desc"),
+                rs.getString("use_yn")
         );
     }
 }

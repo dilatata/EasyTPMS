@@ -15,9 +15,9 @@ public class CommonCodeDetailMapper implements RowMapper<CommonCodeDetailVO> {
         return new CommonCodeDetailVO(rs.getLong("code_detail_id"),
                 rs.getLong("code_group_id"),
                 rs.getString("code_detail_name"),
-                rs.getString("user_detail_desc"),
+                rs.getString("code_detail_desc"),
                 rs.getLong("order_num"),
-                rs.getString("user_use_yn")
+                rs.getString("use_yn")
         );
     }
 }
