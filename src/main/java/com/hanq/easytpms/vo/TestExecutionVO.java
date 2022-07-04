@@ -56,7 +56,7 @@ public class TestExecutionVO {
                            @ColumnName("screen_id") String screenId,
                            @ColumnName("screen_name") String screenName,
                            @ColumnName("test_case_id") String testCasId,
-                           @ColumnName("test_case_name") String testCasename,
+                           @ColumnName("test_case_name") String testCaseName,
                            @ColumnName("exec_due_date") Date execDueDate,
                            @ColumnName("tester") String tester,
                            @ColumnName("test_target_type") String testTargetType,
@@ -83,7 +83,7 @@ public class TestExecutionVO {
         this.screenId = screenId;
         this.screenName = screenName;
         this.testCaseId = testCasId;
-        this.testCaseName = testCasename;
+        this.testCaseName = testCaseName;
         this.execDueDate = execDueDate;
         this.tester = tester;
         this.testTargetType = testTargetType;

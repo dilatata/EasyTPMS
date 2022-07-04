@@ -1,11 +1,14 @@
 package com.hanq.easytpms.controller;
 
 import com.hanq.easytpms.service.TestDefectService;
+import com.hanq.easytpms.vo.ResponseTestDefectVO;
 import com.hanq.easytpms.vo.TestDefectVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import java.util.List;
 
 
 @RestController
@@ -22,15 +25,15 @@ public class TestDefectController {
 
 
     // 시나리오 결함 생성 -> defect history 생성 시작점?
-    @PostMapping(value = "/defect/create/{executionId}")
+    @PostMapping(value = "/defect/create")
     public void insertTestDefect(@RequestBody TestDefectVO request) {
         testDefectService.insertTestDefect(request);
     }
 
     // 시나리오 결함 개별 삭제
-    @DeleteMapping("/defect/delete/{executionId}")
-    public void deleteTestDefect(@PathVariable("executionId") Long executionId) {
-        testDefectService.deleteTestDefect(executionId);
+    @DeleteMapping("/defect/delete/{defectId}")
+    public void deleteTestDefect(@PathVariable("defectId") Long defectId) {
+        testDefectService.deleteTestDefect(defectId);
     }
 
     // 연관 결함 리스트 조회
@@ -51,6 +54,12 @@ public class TestDefectController {
     @GetMapping("/defect/list/{projectName}")
     public Object findAllDefectList(@PathVariable("projectName") String projectName) {
         return testDefectService.findDefectListByProjectName(projectName);
+    }
+
+    // 결함 리스트 전제 조회
+    @GetMapping("/defect/list")
+    public List<ResponseTestDefectVO> findAllDefectList() {
+        return testDefectService.findAllDefectList();
     }
 
     // 결함 세부조건 작성(수정) -> history 생성

@@ -1,5 +1,6 @@
 package com.hanq.easytpms.repository;
 
+import com.hanq.easytpms.vo.ResponseTestDefectVO;
 import com.hanq.easytpms.vo.TestDefectVO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -18,21 +19,20 @@ import java.util.List;
 public interface TestDefectRepository {
     // 시나리오 결함 생성
     @Transaction
-    @SqlUpdate("INSERT INTO execution(execution_id,project_name,test_type,scenario_type, biz_category, biz_detail, version, team_name, scenario_category, test_scenario_id, test_scenario_name, screen_id, screen_name, test_case_id, test_case_name, exec_due_date, tester, test_target_type, test_target_name, confirm_contents, test_data, build_name, build_version, note, execution_date, exec_status, exec_result) " +
+    @SqlUpdate("INSERT INTO defect(execution_id,project_name,test_type,scenario_type, biz_category, biz_detail, version, team_name, scenario_category, test_scenario_id, test_scenario_name, screen_id, screen_name, test_case_id, test_case_name, exec_due_date, tester, test_target_type, test_target_name, confirm_contents, test_data, build_name, build_version, note, execution_date, exec_status, exec_result) " +
             "VALUES(:execution_id, :project_name,:test_type,:scenario_type, :biz_category, :biz_detail, :version, :team_name, :scenario_category, :test_scenario_id, :test_scenario_name, :screen_id, :screen_name, :test_case_id, :test_case_name, :exec_due_date, :tester, test_target_type, :test_target_name, :confirm_contents, :test_data, :build_name, :build_version, :note, :execution_date, :exec_status, :exec_result) ")
     @GetGeneratedKeys
     void insertTestDefect(@BindBean TestDefectVO testExecutionVO);
 
     // 시나리오 결함 개별 삭제
     @Transaction
-    @SqlUpdate("DELETE FROM execution WHERE executionId = :id")
+    @SqlUpdate("DELETE FROM defect WHERE defectId = :id")
     @OutParameter(name = "defectId",  sqlType = java.sql.Types.BIGINT)
-    @OutParameter(name = "executionId",  sqlType = java.sql.Types.BIGINT)
     void deleteTestDefect(@Bind("execution_id") Long executionId);
 
 
     // 연관 결함 리스트 조회
-    @SqlQuery("SELECT * FROM execution WHERE execution_id = :id")
+    @SqlQuery("SELECT * FROM defect WHERE execution_id = :id")
     @RegisterBeanMapper(TestDefectVO.class)
     @OutParameter(name = "defectId",  sqlType = java.sql.Types.BIGINT)
     @OutParameter(name = "executionId",  sqlType = java.sql.Types.BIGINT)
@@ -47,15 +47,20 @@ public interface TestDefectRepository {
 
 
     // 결함 리스트 조회
-    @SqlQuery("SELECT * FROM execution WHERE project_name = :projectName")
+    @SqlQuery("SELECT * FROM defect WHERE project_name = :projectName")
     @RegisterBeanMapper(TestDefectVO.class)
     @OutParameter(name = "defectId",  sqlType = java.sql.Types.BIGINT)
     @OutParameter(name = "executionId",  sqlType = java.sql.Types.BIGINT)
     List<TestDefectVO> findDefectListByProjectName(@Bind("project_name") String projectName);
 
+    // 결함 전체 조회
+    @SqlQuery("SELECT * FROM defect")
+    @RegisterBeanMapper(TestDefectVO.class)
+    List<ResponseTestDefectVO> findAllDefectList();
+
     // 결함 세부조건 작성(수정)
     @Transaction
-    @SqlUpdate("UPDATE execution SET [열] = '변경할값' WHERE executionId = :id")
+    @SqlUpdate("UPDATE defect SET [열] = '변경할값' WHERE executionId = :id")
     void editTestDefect(@BindBean TestDefectVO request);
 
     // 결함조치 결과 작성

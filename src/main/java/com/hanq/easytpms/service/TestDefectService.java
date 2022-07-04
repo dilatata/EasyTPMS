@@ -3,6 +3,7 @@ package com.hanq.easytpms.service;
 import com.hanq.easytpms.repository.TestDefectHistoryRepository;
 import com.hanq.easytpms.repository.TestDefectRepository;
 import com.hanq.easytpms.repository.TestExecutionRepository;
+import com.hanq.easytpms.vo.ResponseTestDefectVO;
 import com.hanq.easytpms.vo.TestDefectHistoryVO;
 import com.hanq.easytpms.vo.TestDefectVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class TestDefectService {
     }
 
     // 시나리오 결함 개별 삭제 O
-    public void deleteTestDefect(Long executionId){
-        testDefectRepository.deleteTestDefect(executionId);
+    public void deleteTestDefect(Long defectId){
+        testDefectRepository.deleteTestDefect(defectId);
     }
 
     // 연관 결함 리스트 조회 O
@@ -47,6 +48,11 @@ public class TestDefectService {
     // join projectName 에 해당하는 executionId 를 갖고 있는 data defect 테이블에서 찾아오기
     public List<TestDefectVO> findDefectListByProjectName(String projectName) {
         return testDefectRepository.findDefectListByProjectName(projectName);
+    };
+
+    // 결함 전체 조회
+    public List<ResponseTestDefectVO> findAllDefectList(){
+        return testDefectRepository.findAllDefectList();
     };
 
     // 결함 상세 조회 O
@@ -65,13 +71,12 @@ public class TestDefectService {
         }else{
             request.setDefectStatus("New");
         }
-        // service 층을 facade / service로 나눌까?
         TestDefectHistoryVO historyRequest = new TestDefectHistoryVO();
         historyRequest.setDefectId(request.getDefectId());
         historyRequest.setExecutionId(request.getExecutionId());
         historyRequest.setDefectStatus(request.getDefectStatus());
         historyRequest.setDefectTeam(request.getDefectTeam());
-        historyRequest.setDefectCharge(request.getDefectCharger());
+        historyRequest.setDefectCharger(request.getDefectCharger());
         historyRequest.setDefectActionContents(request.getDefectActionContents());
 
         testDefectRepository.editTestDefect(request);
@@ -96,6 +101,8 @@ public class TestDefectService {
         testDefectHistoryRepository.insertTestDefectHistory(defectId, executionId, defectStatus, defectTeam, defectCharger, defectActionContents);
         }else{
             System.out.println("여긴 뭐가 들어가야 할까");
+            // 생성해야 할까 사람들이 이것도 저장을 할까?
+            // testDefectRepository.updateTestDefectY();
         }
     }
 

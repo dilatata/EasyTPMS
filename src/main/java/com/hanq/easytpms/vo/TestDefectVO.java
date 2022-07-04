@@ -30,7 +30,7 @@ public class TestDefectVO {
     private String defectActionContents;
     private String defectCheck;
     private Date defectCheckDate;
-    private List<TestDefectHistoryVO> testDefectHistoryVOList;
+//    private List<TestDefectHistoryVO> testDefectHistoryVOList;
 
     public TestDefectVO(@ColumnName("execution_id") long executionId ,
                         @ColumnName("defect_id") long defectId,

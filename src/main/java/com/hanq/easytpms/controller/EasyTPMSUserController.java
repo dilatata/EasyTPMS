@@ -41,7 +41,7 @@ public class EasyTPMSUserController {
     }
 
     // user List 조회
-    @GetMapping("/user/list}")
+    @GetMapping("/user/list")
     public List<UserVO> getUserInfoList(){
         return easyTPMSUserService.getUserInfoList();
     }

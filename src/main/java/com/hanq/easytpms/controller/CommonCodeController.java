@@ -41,7 +41,7 @@ public class CommonCodeController {
     }
 
     // code group list 조회
-    @GetMapping("/common/group/List")
+    @GetMapping("/common/group/list")
     public List<CommonCodeGroupVO> getCodeGroupInfoList() {
         return commonCodeService.getCodeGroupInfoList();
     }

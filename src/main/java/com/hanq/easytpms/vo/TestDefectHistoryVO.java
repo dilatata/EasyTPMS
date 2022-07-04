@@ -17,7 +17,7 @@ public class TestDefectHistoryVO {
     private Long defectId;
     private String defectStatus;
     private String defectTeam;
-    private String defectCharge;
+    private String defectCharger;
     private String defectActionContents;
     private Date defectActionDate;
 
@@ -25,14 +25,14 @@ public class TestDefectHistoryVO {
                                @ColumnName("defect_id") Long defectId,
                                @ColumnName("defect_status") String defectStatus,
                                @ColumnName("defect_team") String defectTeam,
-                               @ColumnName("defect_charge") String defectCharge,
+                               @ColumnName("defect_charger") String defectCharger,
                                @ColumnName("defect_action_contents") String defectActionContents,
                                @ColumnName("defect_action_date") Date defectActionDate){
         this.executionId = executionId;
         this.defectId = defectId;
         this.defectStatus = defectStatus;
         this.defectTeam = defectTeam;
-        this.defectCharge = defectCharge;
+        this.defectCharger = defectCharger;
         this.defectActionContents = defectActionContents;
         this.defectActionDate = defectActionDate;
     }

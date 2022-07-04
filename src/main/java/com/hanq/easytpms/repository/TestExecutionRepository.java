@@ -28,6 +28,10 @@ public interface TestExecutionRepository {
     @RegisterBeanMapper(TestExecutionVO.class)
     List<TestExecutionVO> getTestExecutionInfoByProjectName(@Bind("project_name") String projectName);
 
+    @SqlQuery("SELECT * FROM execution")
+    @RegisterBeanMapper(TestExecutionVO.class)
+    List<TestExecutionVO> getTestExecutionList();
+
     // execution 단독 조회 O
     @SqlQuery("SELECT * FROM execution WHERE execution_id = :id")
     @RegisterBeanMapper(TestExecutionVO.class)

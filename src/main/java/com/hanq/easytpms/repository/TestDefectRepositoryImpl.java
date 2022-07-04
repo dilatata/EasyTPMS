@@ -1,6 +1,8 @@
 package com.hanq.easytpms.repository;
 
+import com.hanq.easytpms.mapper.ResponseTestDefectRowMapper;
 import com.hanq.easytpms.mapper.TestDefectRowMapper;
+import com.hanq.easytpms.vo.ResponseTestDefectVO;
 import com.hanq.easytpms.vo.TestDefectVO;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
@@ -64,9 +66,19 @@ public class TestDefectRepositoryImpl implements TestDefectRepository{
     @Override
     public List<TestDefectVO> findDefectListByProjectName(String p_name) {
         Handle handle = jdbi.open();
-        List<TestDefectVO> testDefectVOList = handle.createQuery("SELECT d.* FROM defect WHERE execution_id = :(SELECT execution_id FROM execution where e.project_name = :projectName)")
+        List<TestDefectVO> testDefectVOList = handle.createQuery("SELECT d.* FROM defect Left Join execution WHERE execution_id = :(SELECT execution_id FROM execution where e.project_name = :projectName)")
                 .bind("projectName", p_name)
                 .map(new TestDefectRowMapper())
+                .list();
+        handle.close();
+        return testDefectVOList;
+    }
+
+    @Override
+    public List<ResponseTestDefectVO> findAllDefectList() {
+        Handle handle = jdbi.open();
+        List<ResponseTestDefectVO> testDefectVOList = handle.createQuery("SELECT d.*, e.* FROM defect d Left Join execution e On d.execution_id = e.execution_id")
+                .map(new ResponseTestDefectRowMapper())
                 .list();
         handle.close();
         return testDefectVOList;

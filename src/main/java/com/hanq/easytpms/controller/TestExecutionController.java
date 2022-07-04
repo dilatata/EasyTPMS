@@ -36,6 +36,11 @@ public class TestExecutionController {
         return testExecutionService.getTestExecutionList(projectName);
     }
 
+    // 프로젝트 전제 조회, full
+    @GetMapping("/execution/list")
+    public  List<TestExecutionVO> getTestExecutionList(){
+        return testExecutionService.getTestExecutionList();
+    }
 
     // execution 상세 조회
     @GetMapping("/execution/detail/{executionId}")
@@ -59,6 +64,12 @@ public class TestExecutionController {
     @PostMapping("/execution/result/{executionId}")
     public void updateTestExecution(@RequestBody TestExecutionVO exec_result) {
         testExecutionService.updateTestExecution(exec_result);
+    }
+
+    // if execution_status = 실패 execution update + defect create
+    @PostMapping("/execution/defect")
+    public void saveTestExecution(@RequestBody TestExecutionVO exec_result) {
+        testExecutionService.saveTestExecution(exec_result);
     }
 
     // excel upload

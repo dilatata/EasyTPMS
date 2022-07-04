@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
+import java.util.List;
+
 
 @Data
 @Getter
@@ -16,6 +18,7 @@ public class CommonCodeGroupVO {
     private String codeGroupName;
     private String codeGroupDesc;
     private String useYn;
+    private List<CommonCodeDetailVO> commonCodeDetailVOList;
 
     public CommonCodeGroupVO(@ColumnName("code_group_id") long codeGroupId,
                              @ColumnName("code_group_name") String codeGroupName,

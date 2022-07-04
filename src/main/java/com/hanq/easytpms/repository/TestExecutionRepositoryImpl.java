@@ -39,6 +39,16 @@ public class TestExecutionRepositoryImpl implements TestExecutionRepository{
     }
 
     @Override
+    public List<TestExecutionVO> getTestExecutionList() {
+        Handle handle = jdbi.open();
+        List<TestExecutionVO> testExecutionVOList = handle.createQuery("SELECT * FROM execution")
+                .map(new TestExecutionRowMapper())
+                .list();
+        handle.close();
+        return testExecutionVOList;
+    }
+
+    @Override
     public TestExecutionVO getTestExecutionInfoByExecutionId(Long id) {
         Handle handle = jdbi.open();
         TestExecutionVO testExecutionVO =handle.createQuery("SELECT * FROM execution WHERE execution_id = :id")
