@@ -88,8 +88,8 @@ public class TestDefectRepositoryImpl implements TestDefectRepository{
     public void editTestDefect(TestDefectVO request) {
         jdbi.useHandle(dao -> dao.createUpdate("UPDATE defect SET defect_category = :defectCategory, defect_contents = :defectContents, defect_status = :defectStatus," +
                 "created_by = :createdBy, create_at = :createAt, defect_team = :defectTeam, defect_charger = :defectCharger," +
-                "defect_start_due_date = :defectStartDueDate, defect_end_due_date = :defectEndDueDate, defect_date = :defectDate " +
-//                ", defect_action_yn = :defectActionYn, defect_action_contents = :defectActionContents " + // edit 하는 상태에서 변경에 들어가야할까?
+                "defect_start_due_date = :defectStartDueDate, defect_end_due_date = :defectEndDueDate" +
+//                                ", defect_date = :defectDate, defect_action_yn = :defectActionYn, defect_action_contents = :defectActionContents " + // edit 하는 상태에서 변경에 들어가야할까?
                         "WHERE defect_id = :defectId")
                 .bindBean(request)
                 .defineNamedBindings()
