@@ -65,7 +65,8 @@ public class EasyTPMSApplication {
 					" defect_action_contents VARCHAR(2000) NULL," +
 					" defect_check VARCHAR(5) NOT NULL," +
 					" defect_check_date DATE NULL," +
-					" foreign key (execution_id) references execution (execution_id)) ");
+					" foreign key (execution_id) references execution (execution_id)" +
+					" on delete cascade) ");
 		});
 
 		// defect history table
@@ -80,7 +81,8 @@ public class EasyTPMSApplication {
 					" defect_charger VARCHAR(100) NULL," +
 					" defect_action_contents VARCHAR(2000) NULL," +
 					" foreign key (defect_id) references defect (defect_id), " +
-					" foreign key (execution_id) references execution(execution_id)) ");
+					" foreign key (execution_id) references execution(execution_id)" +
+					" on delete cascade) ");
 		});
 
 		// user table
@@ -115,7 +117,7 @@ public class EasyTPMSApplication {
 					"order_num BIGINT UNIQUE NULL, " + //order 로만 하면 org.springframework.beans.BeanInstantiationException : ~~ : expected "identifier" error
 					"use_yn VARCHAR(5) NOT NULL," +
 					"foreign key (code_group_id) references common_code_group(code_group_id)" +
-					")");
+					"on delete cascade)");
 		});
 	}
 
