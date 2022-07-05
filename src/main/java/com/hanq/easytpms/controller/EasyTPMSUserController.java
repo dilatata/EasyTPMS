@@ -4,9 +4,11 @@ import com.hanq.easytpms.service.EasyTPMSUserService;
 import com.hanq.easytpms.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -53,7 +55,11 @@ public class EasyTPMSUserController {
     }
 
 
-    // login
+    // login session 추가해야함
+    @PostMapping("/loginForm")
+    public UserVO loginForm(@RequestBody UserVO vo) {
+        return easyTPMSUserService.login(vo);
+    }
 
     //logout
 

@@ -126,11 +126,12 @@ public class TestDefectService {
             testDefectRepository.updateTestDefectCheckY(defectId, defectStatusCheckY, defectCheck, defectCheckDate);
             testDefectHistoryRepository.insertTestDefectHistory(defectId, executionId, defectStatusCheckY, defectTeam, defectCharger, defectActionContents);
             // testExecutionRepository.checkY() -> exec_status '성공'
-            testExecutionRepository.execStatusChange(defectId, "성공");
+            testExecutionRepository.execStatusChange(executionId, "성공");
         }else{
             // defectId, defectStatus = "재결함", defect_action_yn=n, defectCheck = n(이미 n)
             String defectStatusCheckN = "재결함";
-            testDefectRepository.updateTestDefectCheckN(defectId, defectStatusCheckN, defectActionYn);
+            String defectActionYnN = "n";
+            testDefectRepository.updateTestDefectCheckN(defectId, defectStatusCheckN, defectActionYnN);
             testDefectHistoryRepository.insertTestDefectHistory(defectId, executionId, defectStatusCheckN, defectTeam, defectCharger, defectActionContents);
         }
     }

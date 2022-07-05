@@ -65,4 +65,16 @@ public class EasyTPMSUserRepositoryImpl implements EasyTPMSUserRepository{
         handle.close();
         return userVO;
     }
+
+    @Override
+    public UserVO login(String userId, String userPw) {
+        Handle handle = jdbi.open();
+        UserVO userVO = handle.createQuery("SELECT * FROM tpms_user WHERE user_id = :userId and user_password =:userPw")
+                .bind("userId",userId)
+                .bind("userPw",userPw)
+                .map(new EasyTPMSUserMapper())
+                .one();
+        handle.close();
+        return userVO;
+    }
 }

@@ -41,11 +41,19 @@ public class EasyTPMSUserService {
     }
 
     // user 조회
-    @GetMapping("/user/detail/{id}")
     public UserVO getUserInfo(@PathVariable("id") Long id){
         return easyTPMSUserRepository.getUserInfo(id);
     }
 
     // login
+    public  UserVO login(UserVO userVO){
+        String userId = userVO.getUserId();
+        String userPw = userVO.getUserPassword();
+        if (easyTPMSUserRepository.login(userId, userPw) == null){
+            return null;
+        } else {
+        return easyTPMSUserRepository.login(userId, userPw);
+        }
+    }
 
 }

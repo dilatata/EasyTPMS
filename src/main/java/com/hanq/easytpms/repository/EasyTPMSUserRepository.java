@@ -52,5 +52,8 @@ public interface EasyTPMSUserRepository {
 
 
     // login
+    @SqlQuery("SELECT * FROM tpms_user WHERE userId = :userId and userPassword = :userPw")
+    @RegisterBeanMapper(UserVO.class)
+    UserVO login(String userId, String userPw);
 
 }
