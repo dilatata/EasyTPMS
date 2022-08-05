@@ -26,7 +26,7 @@ public interface TestDefectRepository {
 
     // 시나리오 결함 개별 삭제
     @Transaction
-    @SqlUpdate("DELETE FROM defect WHERE defectId = :id")
+    @SqlUpdate("DELETE FROM defect WHERE defect_id = :id")
     @OutParameter(name = "defectId",  sqlType = java.sql.Types.BIGINT)
     void deleteTestDefect(@Bind("defect_id") Long defectId);
 

@@ -4,6 +4,7 @@ import com.hanq.easytpms.repository.CommonCodeDetailRepository;
 import com.hanq.easytpms.repository.CommonCodeGroupRepository;
 import com.hanq.easytpms.vo.CommonCodeDetailVO;
 import com.hanq.easytpms.vo.CommonCodeGroupVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CommonCodeService {
     private CommonCodeGroupRepository commonCodeGroupRepository;
     private CommonCodeDetailRepository commonCodeDetailRepository;
@@ -48,6 +50,7 @@ public class CommonCodeService {
 
     // code detail 생성
     public void insertCodeDetail(@RequestBody CommonCodeDetailVO commonCodeDetailVO){
+        System.out.println("공통코드어떻게 들어왔는지 확인" + commonCodeDetailVO);
         commonCodeDetailRepository.insertCodeDetail(commonCodeDetailVO);
     }
 

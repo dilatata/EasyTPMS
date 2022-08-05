@@ -5,6 +5,9 @@ server:
     threads:
       io: 11
       worker: 300
+  servlet:
+    session:
+      timeout: 1h
 
 # H2 setting
 spring:
@@ -16,13 +19,21 @@ spring:
       path: /h2-console
       settings:
         trace: false
-        web-allow-others: false
+        web-allow-others: true
   # H2 DataSource setting
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:file:C:/data/hanq/easyTPMS
     username: sa
     password:
+#  # jsp
+#  mvc:
+#    view:
+#      prefix: /WEB-INF/views
+#      suffix: .jsp
+#  #static파일경로설정
+#  resource:
+#    static-locations: classpath:/templates/, classpath:/static/*
 
 
   # webserver

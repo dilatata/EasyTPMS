@@ -119,6 +119,21 @@ public class EasyTPMSApplication {
 					"foreign key (code_group_id) references common_code_group(code_group_id)" +
 					"on delete cascade)");
 		});
+
+		// defect file table
+		jdbi.useHandle(dao -> {
+			dao.execute("CREATE TABLE IF NOT EXISTS attach_file(" +
+					" file_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					" defect_id BIGINT NOT NULL," +
+					" execution_id BIGINT NOT NULL, " +
+					" file_order BIGINT NOT NULL, " +
+					" file_name VARCHAR(100) NOT NULL," +
+					" file_size BIGINT, " +
+					" file_loc VARCHAR(2000) NOT NULL," +
+					" foreign key (defect_id) references defect (defect_id), " +
+					" foreign key (execution_id) references execution(execution_id)" +
+					" on delete cascade) ");
+		});
 	}
 
 	public static void main(String[] args) {

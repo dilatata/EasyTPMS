@@ -1,9 +1,11 @@
 package com.hanq.easytpms.service;
 
+import com.hanq.easytpms.repository.TestDefectFileRepository;
 import com.hanq.easytpms.repository.TestDefectHistoryRepository;
 import com.hanq.easytpms.repository.TestDefectRepository;
 import com.hanq.easytpms.repository.TestExecutionRepository;
 import com.hanq.easytpms.vo.ResponseTestDefectVO;
+import com.hanq.easytpms.vo.TestDefectFileVO;
 import com.hanq.easytpms.vo.TestDefectHistoryVO;
 import com.hanq.easytpms.vo.TestDefectVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +21,40 @@ public class TestDefectService {
     private final TestExecutionRepository testExecutionRepository;
     private final TestDefectRepository testDefectRepository;
     private final TestDefectHistoryRepository testDefectHistoryRepository;
+    private final TestDefectFileRepository testDefectFileRepository;
 
 
     @Autowired
-    public TestDefectService(TestDefectRepository testDefectRepository,  TestDefectHistoryRepository testDefectHistoryRepository, TestExecutionRepository testExecutionRepository){
+    public TestDefectService(TestDefectRepository testDefectRepository,
+                             TestDefectHistoryRepository testDefectHistoryRepository,
+                             TestExecutionRepository testExecutionRepository,
+                             TestDefectFileRepository testDefectFileRepository){
         this.testDefectRepository = testDefectRepository;
         this.testDefectHistoryRepository = testDefectHistoryRepository;
         this.testExecutionRepository = testExecutionRepository;
+        this.testDefectFileRepository = testDefectFileRepository;
     }
 
 
     // 시나리오 결함 생성 O
-    public void insertTestDefect(TestDefectVO testDefectVO){
-        testDefectRepository.insertTestDefect(testDefectVO);
+    public void insertTestDefect(TestDefectVO testDefectVO, Long userId, String userName, String userAccountId){
+
+        // createBy 에 userName 넣기
+        TestDefectVO testDefectVO1 = new TestDefectVO();
+        testDefectVO1 = testDefectVO;
+        testDefectVO1.setCreatedBy(userName);
+
+        System.out.println(testDefectVO1);
+        testDefectRepository.insertTestDefect(testDefectVO1); //이때 만들어진 testDefect Id 를 어떻게 갖고오지?
+
+        TestDefectFileVO testDefectFileVO = new TestDefectFileVO();
+
+//        반복문 attach file 의 개수만큼 반복해서 정보 넣기
+        // 문제 ! defect Id 는 어떻게 갖고오지?
+        for (int i = 0; i < testDefectVO1.getTestDefectFileList().size(); i++){
+        testDefectFileVO = testDefectVO.getTestDefectFileList().get(i);
+        testDefectFileRepository.insertTestDefectFile(testDefectFileVO);
+        }
     }
 
     // 시나리오 결함 개별 삭제 O
@@ -126,6 +149,7 @@ public class TestDefectService {
             testDefectRepository.updateTestDefectCheckY(defectId, defectStatusCheckY, defectCheck, defectCheckDate);
             testDefectHistoryRepository.insertTestDefectHistory(defectId, executionId, defectStatusCheckY, defectTeam, defectCharger, defectActionContents);
             // testExecutionRepository.checkY() -> exec_status '성공'
+            // 결함이 여러개일 경우 모든 결함 확인 완료 후 exec_status '성공'으로 변경하도록 만드는 코드 필요!
             testExecutionRepository.execStatusChange(executionId, "성공");
         }else{
             // defectId, defectStatus = "재결함", defect_action_yn=n, defectCheck = n(이미 n)
@@ -137,6 +161,22 @@ public class TestDefectService {
     }
 
     // 결함 첨부파일 생성
+    public void insertTestDefectFile(TestDefectFileVO testDefectFileVO){
+        // file order 임시
+        testDefectFileVO.setFileOrder(0L);
+        testDefectFileRepository.insertTestDefectFile(testDefectFileVO);
+    }
+
+    // 결함 첨부파일 리스트 조회 by defectId
+    public List<TestDefectFileVO> getTestDefectFileList(Long defectId){
+        return  testDefectFileRepository.getTestDefectFileList(defectId);
+    }
+
+    // 결함 첨부파일 삭제
+    public void deleteTestDefectFile(Long fileId){
+        testDefectFileRepository.deleteTestDefectFile(fileId);
+
+    }
 
 
 }
