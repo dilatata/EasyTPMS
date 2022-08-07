@@ -21,10 +21,10 @@ public class TestDefectRepositoryImpl implements TestDefectRepository{
 
     @Override
     public void insertTestDefect(TestDefectVO testDefectVO) {
-        jdbi.useHandle(dao->dao.createUpdate("INSERT INTO defect ( execution_id, defect_category, defect_contents, defect_status, created_by, create_at, defect_team, defect_charger, " +
+        jdbi.useHandle(dao->dao.createUpdate("INSERT INTO defect ( defect_id, execution_id, defect_category, defect_contents, defect_status, created_by, create_at, defect_team, defect_charger, " +
 //                                "defect_start_due_date, defect_end_due_date, defect_date, " +
                                 "defect_action_yn, defect_action_contents, defect_check, defect_check_date)" +
-                "VALUES ( :executionId, :defectCategory, :defectContents, 'NEW', :createdBy, :createAt, :defectTeam, :defectCharger," +
+                "VALUES (NEXTVAL('seq_defect_id'), :executionId, :defectCategory, :defectContents, 'NEW', :createdBy, :createAt, :defectTeam, :defectCharger," +
 //                        " :defectStartDueDate, :defectEndDueDate, :defectDate," +
                         " 'n', :defectActionContents, 'n', :defectCheckDate)")
                 .bindBean(testDefectVO)

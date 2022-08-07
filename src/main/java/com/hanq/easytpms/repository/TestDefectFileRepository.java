@@ -17,12 +17,19 @@ import java.util.List;
 @Repository
 public interface TestDefectFileRepository {
 
-    // 결함 첨부파일 생성
+    // 결함 수정화면 첨부파일 생성
     @Transaction
     @SqlUpdate("INSERT INTO  attach_file( execution_id, defect_id, file_order, file_name, file_size, file_loc) " +
             "VALUES( :execution_id, :defect_id, :fileOrder, :fileName, :fileSize, :fileLoc) ")
     @GetGeneratedKeys
     void insertTestDefectFile(@BindBean TestDefectFileVO testExecutionFileVO);
+
+    // 결함 생성화면 첨부파일 생성
+    @Transaction
+    @SqlUpdate("INSERT INTO  attach_file( execution_id, defect_id, file_order, file_name, file_size, file_loc) " +
+            "VALUES( :execution_id, :defect_id, :fileOrder, :fileName, :fileSize, :fileLoc) ")
+    @GetGeneratedKeys
+    void insertTestDefectFile2(@BindBean TestDefectFileVO testExecutionFileVO);
 
     // 결함 첨부파일 리스트 조회 by defectId
     @SqlQuery("SELECT * FROM attach_file WHERE defect_id = :id")

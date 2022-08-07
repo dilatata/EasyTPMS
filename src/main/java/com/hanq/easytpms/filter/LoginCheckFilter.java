@@ -20,7 +20,6 @@ public class LoginCheckFilter implements Filter {
 
     private static final String[] whiteList = {"/", "/members/add", "/login", "/logout", "/css/*", "/swagger-ui/*","/swagger-resources", "/swagger-resources/*", "/v3/api-docs", "/h2-console", "/h2-console/*" };
 
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {

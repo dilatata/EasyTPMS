@@ -49,7 +49,7 @@ public class EasyTPMSApplication {
 		// defect table
 		jdbi.useHandle(dao -> {
 			dao.execute("CREATE TABLE IF NOT EXISTS defect(" +
-					" defect_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					" defect_id BIGINT NOT NULL PRIMARY KEY, " +
 					" execution_id BIGINT NOT NULL, " +
 					" defect_category VARCHAR(100) NULL," +
 					" defect_contents VARCHAR(2000) NOT NULL," +
@@ -67,6 +67,10 @@ public class EasyTPMSApplication {
 					" defect_check_date DATE NULL," +
 					" foreign key (execution_id) references execution (execution_id)" +
 					" on delete cascade) ");
+		});
+
+		jdbi.useHandle(dao -> {
+			dao.execute("CREATE SEQUENCE IF NOT EXISTS seq_defect_id START WITH 1 INCREMENT BY 1");
 		});
 
 		// defect history table

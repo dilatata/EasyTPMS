@@ -208,11 +208,10 @@ public class TestDefectController {
     }
 
 
-    // 결함 첨부파일 생성 -> 결함 생성에 같이 포함
+    // 첨부파일 단독 생성
     @PostMapping(value="/defect/attachFile/create")
-    public void createDefectFile(MultipartFile pic,
-//                                 @RequestBody
-                                 TestDefectVO testDefectVO,
+    public void createDefectFile( MultipartFile pic,
+//                                 @RequestBody TestDefectVO testDefectVO,
                                  HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         session = request.getSession(false);
@@ -266,14 +265,75 @@ public class TestDefectController {
 //        defectFileVO.setDefectId();
 //        defectFileVO.setExecutionId();
             System.out.println("defectFileVO check : "+defectFileVO);
-            System.out.println("testDefectVO with no @RequestBOdy annotation : "+testDefectVO);
-//        testDefectService.insertTestDefectFile(defectFileVO);
+//            System.out.println("testDefectVO with no @RequestBOdy annotation : "+ testDefectVO);
+        testDefectService.insertTestDefectFile(defectFileVO);
         }
     }
 
 
 
-    // 결함 첨부파일 생성 -> 결함 생성에 같이 포함
+    // defect 화면 수정에서 첨부파일 생성/추가 -> 결함 생성에 같이 포함
+    @PostMapping(value="/defect/attachFile/insert/{executionId}")
+    public void insertDefectFile2(@RequestParam("pic")MultipartFile pic,
+                                 @PathVariable("executionId") Long executionId,
+                                 HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        session = request.getSession(false);
+        log.info("======= attach file upload ======");
+
+        TestDefectFileVO defectFileVO = new TestDefectFileVO();
+
+
+        if (isEmpty(session)){
+            log.info("session get attribute empty");
+        } else {
+            log.info("파일 이름 : " + pic.getOriginalFilename());
+            log.info("파일 타입 : " + pic.getContentType());
+            log.info("파일 크기 : " + pic.getSize());
+            log.info(String.valueOf(pic));
+
+
+            String uploadFolder = "C:\\Users\\hanq\\Desktop\\easytpmsUI";
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            String str = sdf.format(date);
+//        String datePath = str.replace("-", File.separator);
+//        일단 한개의 폴더에 첨부파일 모두 넣기 다 넣기
+
+            /* 폴더 생성 */
+            File uploadPath = new File(uploadFolder, "imageFile");
+            log.info(String.valueOf(uploadPath));
+//        File uploadPath = new File(uploadFolder, datePath); // 첨부파일을 어떻게 나눌까 고민해보기
+            if(uploadPath.exists() == false) {
+                uploadPath.mkdirs();
+            }
+
+            /* uuid 적용 파일 이름 */
+            String uuid = UUID.randomUUID().toString();
+
+            /* 파일 이름 */
+            String uploadFileName = uuid + "_" + pic.getOriginalFilename();
+            /* 파일 위치, 파일 이름을 합친 File 객체 */
+            File saveFile = new File(uploadPath, uploadFileName);
+            /* 파일 저장 */
+            try {
+                pic.transferTo(saveFile);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            defectFileVO.setFileName(pic.getOriginalFilename());
+            defectFileVO.setFileSize(pic.getSize());
+            defectFileVO.setFileLoc(String.valueOf(uploadPath));
+            defectFileVO.setExecutionId(executionId);
+            System.out.println("defectFileVO check : "+defectFileVO);
+
+            testDefectService.insertTestDefectFile2(defectFileVO);
+        }
+    }
+
+
+    // defect 화면 수정에서 첨부파일 생성/추가 -> 결함 생성에 같이 포함
     @PostMapping(value="/defect/attachFile/insert/{executionId}/{defectId}")
     public void insertDefectFile(@RequestParam("pic")MultipartFile pic,
                                  @PathVariable("defectId") Long defectId,

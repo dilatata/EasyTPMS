@@ -28,6 +28,15 @@ public class TestDefectFileRepositoryImpl implements TestDefectFileRepository{
     }
 
     @Override
+    public void insertTestDefectFile2(TestDefectFileVO testdefectFileVO) {
+        jdbi.useHandle(dao->dao.createUpdate("INSERT INTO  attach_file(execution_id, defect_id, file_order, file_name, file_size, file_loc) " +
+                        "VALUES( :executionId, CURRVAL('seq_defect_id'), :fileOrder, :fileName, :fileSize, :fileLoc) ")
+                .bindBean(testdefectFileVO)
+                .execute()
+        );
+    }
+
+    @Override
     public List<TestDefectFileVO> getTestDefectFileList(Long id) {
         Handle handle = jdbi.open();
         List<TestDefectFileVO> testDefectFileVOList = handle.createQuery("SELECT * FROM attach_file WHERE defect_id = :defectId")
