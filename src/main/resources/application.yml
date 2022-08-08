@@ -26,14 +26,7 @@ spring:
     url: jdbc:h2:file:C:/data/hanq/easyTPMS
     username: sa
     password:
-#  # jsp
-#  mvc:
-#    view:
-#      prefix: /WEB-INF/views
-#      suffix: .jsp
-#  #static파일경로설정
-#  resource:
-#    static-locations: classpath:/templates/, classpath:/static/*
+
 
 
   # webserver
