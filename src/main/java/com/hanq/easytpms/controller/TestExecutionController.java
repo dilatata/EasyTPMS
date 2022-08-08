@@ -261,7 +261,6 @@ public class TestExecutionController {
             log.info(String.valueOf(loginUserInfo));
             log.info("session UserName : " + sessionUserName + "session UserID : " + sessionUserId);
 
-            log.info("i want to see there is a createdby value: ",String.valueOf(exec_result));
             testExecutionService.saveTestExecution(exec_result, sessionUserId);
 
 
@@ -271,7 +270,7 @@ public class TestExecutionController {
 
 
     // defect with attach file
-    @PostMapping("/execution/defect/attach-file")
+    @PostMapping(path="/execution/defect/attach-file", consumes = {"multipart/form-data"})
     public void saveTestExecutionNewDefectWithFile(@RequestPart("key") TestExecutionVO exec_result,
                                   @RequestPart("pic") MultipartFile pic,
                                   HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest mhsr) {
@@ -298,8 +297,6 @@ public class TestExecutionController {
             String sessionUserId = loginUserInfo.getUserId();
             log.info(String.valueOf(loginUserInfo));
             log.info("session UserName : " + sessionUserName + "session UserID : " + sessionUserId);
-
-            log.info("i want to see there is a createdby value: ",String.valueOf(exec_result));
             testExecutionService.saveTestExecution(exec_result, sessionUserId);
 
 
@@ -346,14 +343,11 @@ public class TestExecutionController {
 
             System.out.println("defectFileVO check : "+defectFileVO);
 
-            testDefectService.insertTestDefectFile(defectFileVO);
+//            testDefectService.insertTestDefectFile(defectFileVO);
 
 
 
-//            insertTestDefectFile2(TestDefectFileVO testDefectFileVO, Long defectId, Long executionId);
-
-
-
+            testDefectService.insertTestDefectFile2(defectFileVO);
         }
     }
 
